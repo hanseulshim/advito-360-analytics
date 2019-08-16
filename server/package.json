@@ -1,0 +1,33 @@
+{
+  "name": "advito-360-analytics",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "sls offline -s dev --cacheInvalidationRegex 'node_modules'",
+    "alpha": "sls deploy -s alpha --aws-profile advito",
+    "beta": "sls deploy -s beta --aws-profile advito",
+    "dev": "sls deploy -s dev --aws-profile advito",
+    "test": "sls deploy -s test --aws-profile advito"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server-lambda": "^2.8.1",
+    "aws-sdk": "^2.413.0",
+    "dotenv": "^8.0.0",
+    "graphql": "^14.1.1",
+    "knex": "^0.16.5",
+    "lodash.merge": "^4.6.1",
+    "pg": "^7.11.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.13.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "serverless-offline": "^4.4.2",
+    "serverless-plugin-warmup": "^4.3.3-rc.1"
+  }
+}
