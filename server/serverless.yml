@@ -44,7 +44,11 @@ functions:
 custom:
   serverless-offline:
     port: 4000
+  webpack:
+      webpackConfig: ./webpack.config.js
+      includeModules: true
 
 plugins:
+  - serverless-webpack
   - serverless-offline
   - serverless-plugin-warmup

@@ -1,4 +1,5 @@
-import gql from 'apollo-server-lambda'
+import { gql } from 'apollo-server-lambda'
+
 export default gql`
  type User {
    id: Int
@@ -6,9 +7,6 @@ export default gql`
  }
 
  type Query {
-   getUser {
-     id
-     name
-   }
+   getUser: User
  }
 `
