@@ -1,0 +1,50 @@
+service: 360-analytics
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: us-east-2
+  timeout: 30
+  environment: ${file(./env.yml)}
+  vpc:
+    securityGroupIds:
+      - 'sg-09b7d9888c893594d'
+    subnetIds:
+      - 'subnet-08c1aacead6928c9f'
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 'ses:*'
+      Resource: '*'
+
+functions:
+  graphql:
+    warmup: true
+    handler: handler.graphqlHandler
+    events:
+      - http:
+          path: graphql
+          method: post
+          cors:
+            origin: '*'
+            headers:
+              - sessiontoken
+              - Content-Type
+            allowCredentials: false
+      - http:
+          path: graphql
+          method: get
+          cors:
+            origin: '*'
+            headers:
+              - sessiontoken
+              - Content-Type
+            allowCredentials: false
+
+custom:
+  serverless-offline:
+    port: 4000
+
+plugins:
+  - serverless-offline
+  - serverless-plugin-warmup
