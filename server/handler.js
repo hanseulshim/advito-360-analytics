@@ -1,6 +1,7 @@
 import { ApolloServer } from 'apollo-server-lambda'
 import typeDefs from './typeDefs'
 import resolvers from './resolvers'
+import playground from './playground'
 require('dotenv').config()
 
 // const db = require('knex')({
@@ -24,7 +25,7 @@ require('dotenv').config()
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
   // context: async ({ event }) => {
   //   const sessionToken = event.headers.sessiontoken || ''
   //   const user = await authenticateUser(sessionToken, advitoDb)
@@ -33,7 +34,7 @@ const server = new ApolloServer({
   // schemaDirectives: {
   //   auth: requireAuthDirective
   // },
-  // playground
+  playground
 })
 
 export const graphqlHandler = server.createHandler({
