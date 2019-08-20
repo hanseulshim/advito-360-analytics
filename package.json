@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/boostlabscom/advito-360-analytics#readme",
   "dependencies": {
-    "lodash.merge": "^4.6.2"
+    "knex": "^0.19.2",
+    "lodash.merge": "^4.6.2",
+    "objection": "^1.6.9",
+    "pg": "^7.12.1"
   }
 }
