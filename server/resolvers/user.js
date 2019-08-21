@@ -18,11 +18,11 @@ export default {
 
       const roleIds = await user.$relatedQuery('advito_user_role_link').map(role => role.advito_role_id)
 
-      const sessionList = await user.$relatedQuery('advito_user_session').where('session_end', null)
+      const session = await user.$relatedQuery('advito_user_session').where('session_end', null).first()
       const sessionToken = crypto.randomBytes(16).toString('base64')
       const expirationDate = new Date()
       expirationDate.setHours(expirationDate.getHours() + 1)
-      if (sessionList.length) await user.$relatedQuery('advito_user_session').patch({ session_end: new Date() }).where('session_end', null)
+      if (session) await user.$relatedQuery('advito_user_session').patch({ session_end: new Date() }).where('session_end', null)
       await user.$relatedQuery('advito_user_session').insert({
         advito_user_id: user.id,
         session_token: sessionToken,
@@ -45,8 +45,8 @@ export default {
       }
     },
     logout: async (_, { sessionToken }) => {
-      const sessionList = await AdvitoUserSession.query().where('session_token', sessionToken).where('session_end', null)
-      if (!sessionList.length) throw new AuthenticationError('User session not found')
+      const session = await AdvitoUserSession.query().where('session_token', sessionToken).where('session_end', null).first()
+      if (!session) throw new AuthenticationError('User session not found')
       await AdvitoUserSession.query().patch({ session_end: new Date() }).where('session_token', sessionToken).where('session_end', null)
     }
   }

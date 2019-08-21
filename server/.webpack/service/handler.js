@@ -25628,11 +25628,11 @@ __webpack_require__.r(__webpack_exports__);
       } = Object(_util__WEBPACK_IMPORTED_MODULE_3__["saltHash"])(password, userSalt);
       if (dbPassword !== passwordHashed) throw new apollo_server_lambda__WEBPACK_IMPORTED_MODULE_1__["AuthenticationError"]('Password is incorrect`');
       const roleIds = await user.$relatedQuery('advito_user_role_link').map(role => role.advito_role_id);
-      const sessionList = await user.$relatedQuery('advito_user_session').where('session_end', null);
+      const session = await user.$relatedQuery('advito_user_session').where('session_end', null).first();
       const sessionToken = crypto__WEBPACK_IMPORTED_MODULE_4___default.a.randomBytes(16).toString('base64');
       const expirationDate = new Date();
       expirationDate.setHours(expirationDate.getHours() + 1);
-      if (sessionList.length) await user.$relatedQuery('advito_user_session').patch({
+      if (session) await user.$relatedQuery('advito_user_session').patch({
         session_end: new Date()
       }).where('session_end', null);
       await user.$relatedQuery('advito_user_session').insert({
@@ -25658,8 +25658,8 @@ __webpack_require__.r(__webpack_exports__);
     logout: async (_, {
       sessionToken
     }) => {
-      const sessionList = await _models__WEBPACK_IMPORTED_MODULE_2__["AdvitoUserSession"].query().where('session_token', sessionToken).where('session_end', null);
-      if (!sessionList.length) throw new apollo_server_lambda__WEBPACK_IMPORTED_MODULE_1__["AuthenticationError"]('User session not found');
+      const session = await _models__WEBPACK_IMPORTED_MODULE_2__["AdvitoUserSession"].query().where('session_token', sessionToken).where('session_end', null).first();
+      if (!session) throw new apollo_server_lambda__WEBPACK_IMPORTED_MODULE_1__["AuthenticationError"]('User session not found');
       await _models__WEBPACK_IMPORTED_MODULE_2__["AdvitoUserSession"].query().patch({
         session_end: new Date()
       }).where('session_token', sessionToken).where('session_end', null);
