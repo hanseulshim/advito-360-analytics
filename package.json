@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cd ./server && yarn start"
+    "dev": "cd ./server && yarn start",
+    "dev-deploy": "cd ./server && yarn dev"
   },
   "repository": {
     "type": "git",
