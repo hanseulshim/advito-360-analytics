@@ -25530,6 +25530,7 @@ __webpack_require__.r(__webpack_exports__);
         ${_constants__WEBPACK_IMPORTED_MODULE_1__["Login"]}
       }
       logout(sessionToken: "")
+      sendResetPassword(email: "")
     }`
   }
 });
@@ -25663,6 +25664,12 @@ __webpack_require__.r(__webpack_exports__);
       await _models__WEBPACK_IMPORTED_MODULE_2__["AdvitoUserSession"].query().patch({
         session_end: new Date()
       }).where('session_token', sessionToken).where('session_end', null);
+    },
+    sendResetPassword: async (_, {
+      email
+    }) => {
+      const user = await _models__WEBPACK_IMPORTED_MODULE_2__["AdvitoUser"].query().where('email', email).first();
+      const token = Object(_util__WEBPACK_IMPORTED_MODULE_3__["generateAccessToken"])('PASS');
     }
   }
 });
@@ -25748,6 +25755,7 @@ extend type Query {
 extend type Mutation {
   login(username: String!, password: String!): Login
   logout(sessionToken: String!): Int
+  sendResetPassword(email: String!): Int
 }
 `);
 
@@ -25757,7 +25765,7 @@ extend type Mutation {
 /*!***********************!*\
   !*** ./util/index.js ***!
   \***********************/
-/*! exports provided: saltHash */
+/*! exports provided: saltHash, generateAccessToken */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -25766,6 +25774,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(source_map_support_register__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _password__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./password */ "./util/password.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "saltHash", function() { return _password__WEBPACK_IMPORTED_MODULE_1__["saltHash"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "generateAccessToken", function() { return _password__WEBPACK_IMPORTED_MODULE_1__["generateAccessToken"]; });
 
 
 
@@ -25776,12 +25786,13 @@ __webpack_require__.r(__webpack_exports__);
 /*!**************************!*\
   !*** ./util/password.js ***!
   \**************************/
-/*! exports provided: saltHash */
+/*! exports provided: saltHash, generateAccessToken */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saltHash", function() { return saltHash; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateAccessToken", function() { return generateAccessToken; });
 /* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! source-map-support/register */ "source-map-support/register");
 /* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(source_map_support_register__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var crypto__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! crypto */ "crypto");
@@ -25796,6 +25807,7 @@ const saltHash = (password, salt = null) => {
     passwordHashed
   };
 };
+const generateAccessToken = (prefix = '') => prefix + crypto__WEBPACK_IMPORTED_MODULE_1___default.a.randomBytes(16).toString('hex');
 
 /***/ }),
 

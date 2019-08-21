@@ -11,3 +11,5 @@ export const saltHash = (password, salt = null) => {
     passwordHashed
   }
 }
+
+export const generateAccessToken = (prefix = '') => prefix + crypto.randomBytes(16).toString('hex')

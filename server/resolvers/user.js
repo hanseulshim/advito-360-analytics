@@ -1,6 +1,6 @@
 import { AuthenticationError } from 'apollo-server-lambda'
 import { AdvitoUser, AdvitoUserSession } from '../models'
-import { saltHash } from '../util'
+import { saltHash, generateAccessToken } from '../util'
 import crypto from 'crypto'
 
 export default {
@@ -48,6 +48,10 @@ export default {
       const session = await AdvitoUserSession.query().where('session_token', sessionToken).where('session_end', null).first()
       if (!session) throw new AuthenticationError('User session not found')
       await AdvitoUserSession.query().patch({ session_end: new Date() }).where('session_token', sessionToken).where('session_end', null)
+    },
+    sendResetPassword: async (_, { email }) => {
+      const user = await AdvitoUser.query().where('email', email).first()
+      const token = generateAccessToken('PASS')
     }
   }
 }
