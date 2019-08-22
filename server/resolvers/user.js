@@ -1,6 +1,7 @@
 import { AuthenticationError } from 'apollo-server-lambda'
 import { AdvitoUser, AdvitoUserSession } from '../models'
-import { saltHash, generateAccessToken } from '../util'
+import { saltHash, generateAccessToken, getExpirationDate } from '../util'
+import { SESSION, RECOVERY } from '../constants'
 import crypto from 'crypto'
 
 export default {
@@ -16,21 +17,18 @@ export default {
       const { passwordHashed } = saltHash(password, userSalt)
       if (dbPassword !== passwordHashed) throw new AuthenticationError('Password is incorrect`')
 
-      const roleIds = await user.$relatedQuery('advito_user_role_link').map(role => role.advito_role_id)
-
-      const session = await user.$relatedQuery('advito_user_session').where('session_end', null).first()
+      const roleIds = await user.$relatedQuery('advitoUserRoleLink').map(role => role.advito_role_id)
+      const session = await user.$relatedQuery('advitoUserSession').where('session_end', null).first()
       const sessionToken = crypto.randomBytes(16).toString('base64')
-      const expirationDate = new Date()
-      expirationDate.setHours(expirationDate.getHours() + 1)
-      if (session) await user.$relatedQuery('advito_user_session').patch({ session_end: new Date() }).where('session_end', null)
-      await user.$relatedQuery('advito_user_session').insert({
+      if (session) await user.$relatedQuery('advitoUserSession').patch({ session_end: new Date() }).where('session_end', null)
+      await user.$relatedQuery('advitoUserSession').insert({
         advito_user_id: user.id,
         session_token: sessionToken,
         session_start: new Date(),
         session_end: null,
         session_duration_sec: 3600,
         session_type: null,
-        session_expiration: new Date(expirationDate),
+        session_expiration: getExpirationDate(SESSION),
         session_note: null,
         created: new Date(),
         modified: new Date()
@@ -51,7 +49,17 @@ export default {
     },
     sendResetPassword: async (_, { email }) => {
       const user = await AdvitoUser.query().where('email', email).first()
+      if (!user) throw new AuthenticationError('User not found')
+      const oldToken = await user.$relatedQuery('accessToken').where('is_active', true).first()
+      if (oldToken) await await user.$relatedQuery('accessToken').patch({ is_active: false }).where('is_active', true).first()
       const token = generateAccessToken('PASS')
+      await user.$relatedQuery('accessToken').insert({
+        advito_user_id: user.id,
+        token_type: 'RECOVERY',
+        token,
+        token_expiration: getExpirationDate(RECOVERY)
+      })
+      return token
     }
   }
 }

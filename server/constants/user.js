@@ -24,3 +24,6 @@ export const User = `id
         address
         created
         modified`
+
+export const SESSION = 'SESSION'
+export const RECOVERY = 'RECOVERY'

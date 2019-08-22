@@ -1,4 +1,4 @@
-service: 360-analytics
+service: analytics
 
 provider:
   name: aws

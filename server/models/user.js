@@ -10,7 +10,7 @@ export class AdvitoUser extends Model {
   }
 
   static get relationMappings () {
-    return { advito_user_role_link: {
+    return { advitoUserRoleLink: {
       relation: Model.HasManyRelation,
       modelClass: AdvitoUserRoleLink,
       join: {
@@ -18,12 +18,20 @@ export class AdvitoUser extends Model {
         to: 'advito_user_role_link.advito_user_id'
       }
     },
-    advito_user_session: {
+    advitoUserSession: {
       relation: Model.HasManyRelation,
       modelClass: AdvitoUserSession,
       join: {
         from: 'advito_user.id',
         to: 'advito_user_session.advito_user_id'
+      }
+    },
+    accessToken: {
+      relation: Model.HasManyRelation,
+      modelClass: AccessToken,
+      join: {
+        from: 'advito_user.id',
+        to: 'access_token.advito_user_id'
       }
     } }
   }
@@ -38,5 +46,11 @@ export class AdvitoUserRoleLink extends Model {
 export class AdvitoUserSession extends Model {
   static get tableName () {
     return 'advito_user_session'
+  }
+}
+
+export class AccessToken extends Model {
+  static get tableName () {
+    return 'access_token'
   }
 }

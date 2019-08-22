@@ -1,4 +1,5 @@
 import crypto from 'crypto'
+import { SESSION, RECOVERY } from '../constants'
 
 export const saltHash = (password, salt = null) => {
   const saltHashed = salt || crypto.randomBytes(16).toString('base64')
@@ -13,3 +14,13 @@ export const saltHash = (password, salt = null) => {
 }
 
 export const generateAccessToken = (prefix = '') => prefix + crypto.randomBytes(16).toString('hex')
+
+export const getExpirationDate = (type) => {
+  const expirationDate = new Date()
+  if (type === SESSION) {
+    expirationDate.setHours(expirationDate.getHours() + 1)
+  } else if (type === RECOVERY) {
+    expirationDate.setHours(expirationDate.getHours() + 24)
+  }
+  return new Date(expirationDate)
+}
