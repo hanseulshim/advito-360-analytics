@@ -21,7 +21,7 @@ export default {
         ${Login}
       }
       logout(sessionToken: "")
-      sendResetPassword(email: "")
+      sendResetPasswordEmail(email: "")
     }`
   }
 }

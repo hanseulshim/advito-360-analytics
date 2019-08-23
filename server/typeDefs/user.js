@@ -35,6 +35,6 @@ extend type Query {
 extend type Mutation {
   login(username: String!, password: String!): Login
   logout(sessionToken: String!): Int
-  sendResetPassword(email: String!): String
+  sendResetPasswordEmail(email: String!): String
 }
 `

@@ -48,7 +48,7 @@ export default {
       if (!session) throw new AuthenticationError('User session not found')
       await AdvitoUserSession.query().patch({ session_end: new Date() }).where('session_token', sessionToken).where('session_end', null)
     },
-    sendResetPassword: async (_, { email }) => {
+    sendResetPasswordEmail: async (_, { email }) => {
       const user = await AdvitoUser.query().where('email', email).first()
       if (!user) throw new AuthenticationError('User not found')
       const oldToken = await user.$relatedQuery('accessToken').where('is_active', true).first()
