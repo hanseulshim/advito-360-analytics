@@ -24,3 +24,14 @@ export const getExpirationDate = (type) => {
   }
   return new Date(expirationDate)
 }
+
+export const checkValidPassword = (password) => {
+  const errorMessages = []
+  if (password.length < 8) errorMessages.push('Password must be at least 8 characters long.')
+  if (!/\d/g.test(password)) errorMessages.push('Password must have at least one number.')
+  if (!/[a-z]/g.test(password)) errorMessages.push('Password must have at least one lowercase letter.')
+  if (!/[A-Z]/g.test(password)) errorMessages.push('Password must have at least one uppercase letter.')
+  // if (!/\.|\,|\?|\/|!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\+|\=|\||\~/g.test(password)) errorMessages.push('Password must have at least one special character.') // eslint-disable-line
+  if (/\s/g.test(password)) errorMessages.push('Password cannot have spaces or other whitespace.')
+  return errorMessages
+}

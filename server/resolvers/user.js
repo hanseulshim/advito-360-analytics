@@ -1,6 +1,6 @@
-import { AuthenticationError, ForbiddenError } from 'apollo-server-lambda'
-import { AdvitoUser, AdvitoUserSession } from '../models'
-import { saltHash, generateAccessToken, getExpirationDate, sendEmail } from '../util'
+import { AuthenticationError, ForbiddenError, UserInputError } from 'apollo-server-lambda'
+import { AdvitoUser, AdvitoUserSession, AccessToken } from '../models'
+import { saltHash, generateAccessToken, getExpirationDate, sendEmail, checkValidPassword } from '../util'
 import { SESSION, RECOVERY } from '../constants'
 import { APP_URL } from '../config'
 import crypto from 'crypto'
@@ -52,7 +52,7 @@ export default {
       const user = await AdvitoUser.query().where('email', email).first()
       if (!user) throw new AuthenticationError('User not found')
       const oldToken = await user.$relatedQuery('accessToken').where('is_active', true).first()
-      if (oldToken) await await user.$relatedQuery('accessToken').patch({ is_active: false }).where('is_active', true).first()
+      if (oldToken) await user.$relatedQuery('accessToken').patch({ is_active: false }).where('is_active', true).first()
       const token = generateAccessToken('PASS')
       await user.$relatedQuery('accessToken').insert({
         advito_user_id: user.id,
@@ -70,6 +70,17 @@ export default {
       } catch (err) {
         throw new ForbiddenError(err.message)
       }
+    },
+    resetPassword: async (_, { token, password, confirmPassword }) => {
+      const errorMessages = checkValidPassword(password)
+      if (password !== confirmPassword) throw new UserInputError('Passwords do not match')
+      if (errorMessages.length) throw new UserInputError(errorMessages)
+      const accessToken = await AccessToken.query().where('token', token).first()
+      if (!accessToken) throw new AuthenticationError('Access token is not valid')
+      const { is_active: isActive, token_expiration: tokenExpiration, advito_user_id: advitoUserId } = accessToken
+      if (!isActive || tokenExpiration < new Date()) throw new AuthenticationError('Access token is not valid')
+      const { saltHashed, passwordHashed } = saltHash(password)
+      await AdvitoUser.query().patch({ pwd: passwordHashed, user_salt: saltHashed }).where('id', advitoUserId)
     }
   }
 }

@@ -22,6 +22,7 @@ export default {
       }
       logout(sessionToken: "")
       sendResetPasswordEmail(email: "")
+      resetPassword(token: "", password: "", confirmPassword: "")
     }`
   }
 }

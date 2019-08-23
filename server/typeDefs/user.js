@@ -36,5 +36,6 @@ extend type Mutation {
   login(username: String!, password: String!): Login
   logout(sessionToken: String!): Int
   sendResetPasswordEmail(email: String!): String
+  resetPassword(token: String!, password: String!, confirmPassword: String!): Int
 }
 `
