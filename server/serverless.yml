@@ -11,11 +11,12 @@ provider:
       - 'sg-09b7d9888c893594d'
     subnetIds:
       - 'subnet-08c1aacead6928c9f'
+      - 'subnet-076b9627be0729a38'
   iamRoleStatements:
-    - Effect: 'Allow'
+    - Effect: "Allow"
       Action:
-        - 'ses:*'
-      Resource: '*'
+        - "ses:SendEmail"
+      Resource: "*"
 
 functions:
   graphql:
