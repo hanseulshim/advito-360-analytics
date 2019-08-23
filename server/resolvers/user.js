@@ -1,7 +1,8 @@
-import { AuthenticationError } from 'apollo-server-lambda'
+import { AuthenticationError, ForbiddenError } from 'apollo-server-lambda'
 import { AdvitoUser, AdvitoUserSession } from '../models'
-import { saltHash, generateAccessToken, getExpirationDate } from '../util'
+import { saltHash, generateAccessToken, getExpirationDate, sendEmail } from '../util'
 import { SESSION, RECOVERY } from '../constants'
+import { APP_URL } from '../config'
 import crypto from 'crypto'
 
 export default {
@@ -59,7 +60,16 @@ export default {
         token,
         token_expiration: getExpirationDate(RECOVERY)
       })
-      return token
+      const placeholders = {
+        NAMEFIRST: user.name_first,
+        URL: `${APP_URL}/resetpassword?t=${token}`
+      }
+      try {
+        await sendEmail('Password Recovery', user.email, placeholders)
+        return token
+      } catch (err) {
+        throw new ForbiddenError(err.message)
+      }
     }
   }
 }

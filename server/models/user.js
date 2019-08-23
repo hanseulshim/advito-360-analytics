@@ -54,3 +54,9 @@ export class AccessToken extends Model {
     return 'access_token'
   }
 }
+
+export class EmailTemplate extends Model {
+  static get tableName () {
+    return 'email_template'
+  }
+}
