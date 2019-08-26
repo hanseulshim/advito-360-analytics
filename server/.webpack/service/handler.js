@@ -25689,7 +25689,7 @@ __webpack_require__.r(__webpack_exports__);
       const {
         passwordHashed
       } = Object(_util__WEBPACK_IMPORTED_MODULE_3__["saltHash"])(password, userSalt);
-      if (dbPassword !== passwordHashed) throw new apollo_server_lambda__WEBPACK_IMPORTED_MODULE_1__["UserInputError"]('Password is incorrect`');
+      if (dbPassword !== passwordHashed) throw new apollo_server_lambda__WEBPACK_IMPORTED_MODULE_1__["UserInputError"]('Password is incorrect');
       const roleIds = await user.$relatedQuery('advitoUserRoleLink').map(role => role.advito_role_id);
       const session = await user.$relatedQuery('advitoUserSession').where('session_end', null).first();
       const sessionToken = crypto__WEBPACK_IMPORTED_MODULE_6___default.a.randomBytes(16).toString('base64');

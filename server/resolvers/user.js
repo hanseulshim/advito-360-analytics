@@ -16,7 +16,7 @@ export default {
       if (!user.is_enabled) throw new UserInputError('User is not enabled')
       const { pwd: dbPassword, user_salt: userSalt } = user
       const { passwordHashed } = saltHash(password, userSalt)
-      if (dbPassword !== passwordHashed) throw new UserInputError('Password is incorrect`')
+      if (dbPassword !== passwordHashed) throw new UserInputError('Password is incorrect')
 
       const roleIds = await user.$relatedQuery('advitoUserRoleLink').map(role => role.advito_role_id)
       const session = await user.$relatedQuery('advitoUserSession').where('session_end', null).first()
