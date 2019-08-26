@@ -12,11 +12,11 @@ export default {
   Mutation: {
     login: async (_, { username, password }) => {
       const user = await AdvitoUser.query().where('username', username).first()
-      if (!user) throw new AuthenticationError('User not found')
-      if (!user.is_enabled) throw new AuthenticationError('User is not enabled')
+      if (!user) throw new UserInputError('User not found')
+      if (!user.is_enabled) throw new UserInputError('User is not enabled')
       const { pwd: dbPassword, user_salt: userSalt } = user
       const { passwordHashed } = saltHash(password, userSalt)
-      if (dbPassword !== passwordHashed) throw new AuthenticationError('Password is incorrect`')
+      if (dbPassword !== passwordHashed) throw new UserInputError('Password is incorrect`')
 
       const roleIds = await user.$relatedQuery('advitoUserRoleLink').map(role => role.advito_role_id)
       const session = await user.$relatedQuery('advitoUserSession').where('session_end', null).first()
@@ -50,7 +50,7 @@ export default {
     },
     sendResetPasswordEmail: async (_, { email }) => {
       const user = await AdvitoUser.query().where('email', email).first()
-      if (!user) throw new AuthenticationError('User not found')
+      if (!user) throw new UserInputError('User not found')
       const oldToken = await user.$relatedQuery('accessToken').where('is_active', true).first()
       if (oldToken) await user.$relatedQuery('accessToken').patch({ is_active: false }).where('is_active', true).first()
       const token = generateAccessToken('PASS')
