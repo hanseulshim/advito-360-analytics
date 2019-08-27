@@ -65,7 +65,7 @@ export default {
         URL: `${APP_URL}/resetpassword?t=${token}`
       }
       try {
-        await sendEmail('Password Recovery', user.email, placeholders)
+        await sendEmail('Password Air Recovery', user.email, placeholders)
         return token
       } catch (err) {
         throw new ForbiddenError(err.message)
