@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cd ./server && yarn start",
-    "dev-deploy": "cd ./server && yarn dev"
+    "start": "cd ./server && yarn start",
+    "alpha": "cd ./server && yarn alpha",
+    "beta": "cd ./server && yarn beta",
+    "dev": "cd ./server && yarn dev"
   },
   "repository": {
     "type": "git",
