@@ -25235,8 +25235,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! source-map-support/register */ "source-map-support/register");
 /* harmony import */ var source_map_support_register__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(source_map_support_register__WEBPACK_IMPORTED_MODULE_0__);
 
-const ADVITO_AIR_APPLICATION = 2;
-const APP_URL = 'http://localhost:8080/#';
+const ADVITO_AIR_APPLICATION = 2; // export const APP_URL = 'http://localhost:8080/#'
+
+const APP_URL = 'https://s3.amazonaws.com/alpha.boostlabs/air-dev/index.html?#'; // export const APP_URL =
+//   'https://s3.amazonaws.com/beta.boostlabs/air/index.html#';
+// export const APP_URL =
+//   'https://s3.amazonaws.com/alpha.boostlabs/air/index.html#';
+
 const EMAIL_SENDER = 'IandA@advito.com';
 const EMAIL_BCC = ['ianda@advito.com', 'hshim@boostlabs.com'];
 
