@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "cd ./server && yarn start"
+    "start": "cd ./server && yarn start",
+    "alpha": "cd ./server && yarn alpha",
+    "beta": "cd ./server && yarn beta",
+    "dev": "cd ./server && yarn dev"
   },
   "repository": {
     "type": "git",
@@ -17,6 +20,9 @@
   },
   "homepage": "https://github.com/boostlabscom/advito-360-analytics#readme",
   "dependencies": {
-    "lodash.merge": "^4.6.2"
+    "knex": "^0.19.2",
+    "lodash.merge": "^4.6.2",
+    "objection": "^1.6.9",
+    "pg": "^7.12.1"
   }
 }

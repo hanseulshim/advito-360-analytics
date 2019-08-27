@@ -1,12 +1,28 @@
+import { User, Login } from '../constants'
 export default {
-  name: 'User Queries',
-  endpoint: '',
-  headers: { sessiontoken: 'MY^PR3TTYP0NY' },
-  query: `
+  Query: {
+    name: 'User Queries',
+    endpoint: '',
+    headers: { sessiontoken: 'MY^PR3TTYP0NY' },
+    query: `
     {
       getUser {
-        id
-        name
+        ${User}
       }
     }`
+  },
+  Mutation: {
+    name: 'User Mutations',
+    endpoint: '',
+    headers: { sessiontoken: 'MY^PR3TTYP0NY' },
+    query: `
+    mutation {
+      login(username: "", password: "") {
+        ${Login}
+      }
+      logout(sessionToken: "")
+      sendResetPasswordEmail(email: "")
+      resetPassword(token: "", password: "", confirmPassword: "")
+    }`
+  }
 }
