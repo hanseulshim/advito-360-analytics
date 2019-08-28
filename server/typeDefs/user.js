@@ -43,5 +43,15 @@ extend type Mutation {
     confirmPassword: String!
     roleIds: [Int]!
   ): User
+  updateUser(
+    id: Int!
+    username: String!
+    nameLast: String!
+    nameFirst: String!
+    isEnabled: Boolean!
+    phone: String
+    address: String
+    roleIds: [Int]
+  ): User
 }
 `

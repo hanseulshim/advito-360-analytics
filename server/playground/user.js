@@ -29,10 +29,22 @@ export default {
         nameLast: ""
         nameFirst: ""
         isEnabled: true
-        phone: ""
-        address: ""
+        phone: null
+        address: null
         password: ""
         confirmPassword: ""
+        roleIds: []
+      ) {
+        ${User}
+      }
+      updateUser(
+        id: null
+        username: ""
+        nameLast: ""
+        nameFirst: ""
+        isEnabled: true
+        phone: null
+        address: null
         roleIds: []
       ) {
         ${User}

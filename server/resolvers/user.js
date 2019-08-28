@@ -132,7 +132,44 @@ export default {
       const roleIdsInsert = roleIds.map(advitoRoleId => ({
         advitoRoleId
       }))
-      console.log(user)
+      await user.$relatedQuery('advitoUserRoleLink').insert(roleIdsInsert)
+      return {
+        ...user,
+        roleIds
+      }
+    },
+    updateUser: async (_, {
+      id,
+      username,
+      nameLast,
+      nameFirst,
+      isEnabled,
+      phone,
+      address,
+      roleIds = []
+    }) => {
+      const checkUserId = await AdvitoUser.query().findById(id).first()
+      if (!checkUserId) throw new UserInputError('User not found')
+      const checkUserEmail = await AdvitoUser.query().where('username', username).first()
+      if (checkUserEmail && parseInt(checkUserEmail.id) !== id) throw new UserInputError('User email already exists')
+      const checkEmail = validateEmail(username)
+      if (!checkEmail) throw new UserInputError('Username is invalid')
+      if (!nameLast || !nameFirst) throw new UserInputError('Name cannot be blank')
+      if (!roleIds.length) throw new UserInputError('User needs a role')
+      const email = username.toLowerCase()
+      const user = await AdvitoUser.query().patchAndFetchById(id, {
+        username: email,
+        nameLast,
+        nameFirst,
+        isEnabled,
+        email,
+        phone,
+        address
+      })
+      await user.$relatedQuery('advitoUserRoleLink').delete()
+      const roleIdsInsert = roleIds.map(advitoRoleId => ({
+        advitoRoleId
+      }))
       await user.$relatedQuery('advitoUserRoleLink').insert(roleIdsInsert)
       return {
         ...user,
