@@ -1,41 +1,47 @@
 export default `
 type User {
-  id: String,
-  client_id: String,
-  username: String,
-  pwd: String,
-  name_last: String,
-  name_first: String,
-  is_enabled: Boolean,
-  is_verified: Boolean,
-  must_change_pwd: Boolean,
-  pwd_expiration: Date,
-  email: String,
-  phone: String,
-  profile_picture_path: String,
-  default_timezone: String,
-  default_language: String,
-  user_salt: String,
-  default_date_format: String,
-  address: String,
-  created: String,
-  modified: String
+  id: Int
+  clientId: Int
+  username: String
+  nameLast: String
+  nameFirst: String
+  isEnabled: Boolean
+  email: String
+  phone: String
+  profilePicturePath: String
+  defaultTimezone: String
+  defaultLanguage: String
+  defaultDateFormat: String
+  address: String
+  roleIds: [Int]
 }
 type Login {
-  displayName: String,
-  clientId: Int,
-  profilePicturePath: String,
-  sessionToken: String,
+  displayName: String
+  clientId: Int
+  profilePicturePath: String
+  sessionToken: String
   roleIds: [Int]
 }
 
 extend type Query {
-  getUser: User
+  getUser(id: Int!): User
 }
 extend type Mutation {
   login(username: String!, password: String!): Login
-  logout(sessionToken: String!): Int
+  logout(sessionToken: String!): Boolean
   sendResetPasswordEmail(email: String!): String
-  resetPassword(token: String!, password: String!, confirmPassword: String!): Int
+  resetPassword(token: String!, password: String!, confirmPassword: String!): Boolean
+  createUser(
+    clientId: Int!
+    username: String!
+    nameLast: String!
+    nameFirst: String!
+    isEnabled: Boolean!
+    phone: String
+    address: String
+    password: String!
+    confirmPassword: String!
+    roleIds: [Int]!
+  ): User
 }
 `

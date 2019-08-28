@@ -2,11 +2,11 @@ import { Model } from 'objection'
 
 export class AdvitoUser extends Model {
   static get tableName () {
-    return 'advito_user'
+    return 'advitoUser'
   }
 
   fullName () {
-    return this.name_first + ' ' + this.name_last
+    return this.nameFirst + ' ' + this.nameLast
   }
 
   static get relationMappings () {
@@ -14,24 +14,24 @@ export class AdvitoUser extends Model {
       relation: Model.HasManyRelation,
       modelClass: AdvitoUserRoleLink,
       join: {
-        from: 'advito_user.id',
-        to: 'advito_user_role_link.advito_user_id'
+        from: 'advitoUser.id',
+        to: 'advitoUserRoleLink.advitoUserId'
       }
     },
     advitoUserSession: {
       relation: Model.HasManyRelation,
       modelClass: AdvitoUserSession,
       join: {
-        from: 'advito_user.id',
-        to: 'advito_user_session.advito_user_id'
+        from: 'advitoUser.id',
+        to: 'advitoUserSession.advitoUserId'
       }
     },
     accessToken: {
       relation: Model.HasManyRelation,
       modelClass: AccessToken,
       join: {
-        from: 'advito_user.id',
-        to: 'access_token.advito_user_id'
+        from: 'advitoUser.id',
+        to: 'accessToken.advitoUserId'
       }
     } }
   }
@@ -39,24 +39,24 @@ export class AdvitoUser extends Model {
 
 export class AdvitoUserRoleLink extends Model {
   static get tableName () {
-    return 'advito_user_role_link'
+    return 'advitoUserRoleLink'
   }
 }
 
 export class AdvitoUserSession extends Model {
   static get tableName () {
-    return 'advito_user_session'
+    return 'advitoUserSession'
   }
 }
 
 export class AccessToken extends Model {
   static get tableName () {
-    return 'access_token'
+    return 'accessToken'
   }
 }
 
 export class EmailTemplate extends Model {
   static get tableName () {
-    return 'email_template'
+    return 'emailTemplate'
   }
 }

@@ -3,7 +3,7 @@ import typeDefs from './typeDefs'
 import resolvers from './resolvers'
 import playground from './playground'
 import Knex from 'knex'
-import { Model } from 'objection'
+import { Model, knexSnakeCaseMappers } from 'objection'
 require('dotenv').config()
 
 const db = Knex({
@@ -13,7 +13,8 @@ const db = Knex({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.ADVITO_DB_DATABASE
-  }
+  },
+  ...knexSnakeCaseMappers()
 })
 Model.knex(db)
 
@@ -21,8 +22,8 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: async ({ event }) => {
-    const sessionToken = event.headers.sessiontoken || ''
-    return { db }
+    // const sessionToken = event.headers.sessiontoken || ''
+    // return { db }
     // const user = await authenticateUser(sessionToken, advitoDb)
     // return { user, db }
   },

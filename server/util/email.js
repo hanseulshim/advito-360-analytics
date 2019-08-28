@@ -8,7 +8,7 @@ const ses = new AWS.SES({
 })
 
 export const sendEmail = async (templateName, recipient, placeholders) => {
-  const { email_subject: emailSubject, email_body: emailBody } = await EmailTemplate.query().where('template_name', templateName).where('advito_application_id', ADVITO_AIR_APPLICATION).first()
+  const { emailSubject, emailBody } = await EmailTemplate.query().where('templateName', templateName).where('advitoApplicationId', ADVITO_AIR_APPLICATION).first()
   let message = emailBody
   Object.keys(placeholders).forEach(key => {
     const regex = new RegExp(String.raw`\[\[${key}]]`, 'g')

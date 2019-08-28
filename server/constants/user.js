@@ -5,25 +5,19 @@ export const Login = `displayName
         roleIds`
 
 export const User = `id
-        client_id
+        clientId
         username
-        pwd
-        name_last
-        name_first
-        is_enabled
-        is_verified
-        must_change_pwd
-        pwd_expiration
+        nameLast
+        nameFirst
+        isEnabled
         email
         phone
-        profile_picture_path
-        default_timezone
-        default_language
-        user_salt
-        default_date_format
+        profilePicturePath
+        defaultTimezone
+        defaultLanguage
+        defaultDateFormat
         address
-        created
-        modified`
+        roleIds`
 
 export const SESSION = 'SESSION'
 export const RECOVERY = 'RECOVERY'
