@@ -6,7 +6,7 @@ export default {
     headers: { sessiontoken: 'MY^PR3TTYP0NY' },
     query: `
     {
-      getUser {
+      getUser(id: null) {
         ${User}
       }
     }`
@@ -23,6 +23,33 @@ export default {
       logout(sessionToken: "")
       sendResetPasswordEmail(email: "")
       resetPassword(token: "", password: "", confirmPassword: "")
+      createUser(
+        clientId: 1
+        username: ""
+        nameLast: ""
+        nameFirst: ""
+        isEnabled: true
+        phone: null
+        address: null
+        password: ""
+        confirmPassword: ""
+        roleIds: []
+      ) {
+        ${User}
+      }
+      updateUser(
+        id: null
+        username: ""
+        nameLast: ""
+        nameFirst: ""
+        isEnabled: true
+        phone: null
+        address: null
+        roleIds: []
+      ) {
+        ${User}
+      }
+      deleteUser(id: null)
     }`
   }
 }
