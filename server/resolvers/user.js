@@ -19,7 +19,7 @@ export default {
   },
   Mutation: {
     login: async (_, { username, password }) => {
-      const user = await AdvitoUser.query().where('username', username).first()
+      const user = await AdvitoUser.query().where('username', username.toLowerCase()).first()
       if (!user) throw new UserInputError('User not found')
       if (!user.isEnabled) throw new UserInputError('User is not enabled')
       const { pwd: dbPassword, userSalt } = user
