@@ -53,5 +53,8 @@ extend type Mutation {
     address: String
     roleIds: [Int]
   ): User
+  deleteUser(
+    id: Int!
+  ): Boolean
 }
 `

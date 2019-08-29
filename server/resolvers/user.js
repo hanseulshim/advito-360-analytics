@@ -175,6 +175,16 @@ export default {
         ...user,
         roleIds
       }
+    },
+    deleteUser: async (_, {
+      id
+    }) => {
+      const user = await AdvitoUser.query().findById(id).first()
+      if (!user) throw new UserInputError('User not found')
+      await user.$relatedQuery('advitoUserSession').delete().where('advitoUserId', id)
+      await user.$relatedQuery('advitoUserRoleLink').delete().where('advitoUserId', id)
+      await AdvitoUser.query().deleteById(id)
+      return true
     }
   }
 }

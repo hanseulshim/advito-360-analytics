@@ -49,6 +49,7 @@ export default {
       ) {
         ${User}
       }
+      deleteUser(id: null)
     }`
   }
 }
