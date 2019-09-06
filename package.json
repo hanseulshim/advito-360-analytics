@@ -18,11 +18,5 @@
   "bugs": {
     "url": "https://github.com/boostlabscom/advito-360-analytics/issues"
   },
-  "homepage": "https://github.com/boostlabscom/advito-360-analytics#readme",
-  "dependencies": {
-    "knex": "^0.19.2",
-    "lodash.merge": "^4.6.2",
-    "objection": "^1.6.9",
-    "pg": "^7.12.1"
-  }
+  "homepage": "https://github.com/boostlabscom/advito-360-analytics#readme"
 }
