@@ -49,6 +49,11 @@ export default {
       ) {
         ${User}
       }
+      updateUserPassword(
+        id: null
+        password: ""
+        confirmPassword: ""
+      )
       deleteUser(id: null)
     }`
   }

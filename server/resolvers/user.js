@@ -79,15 +79,15 @@ export default {
       }
     },
     resetPassword: async (_, { token, password, confirmPassword }) => {
-      const errorMessages = checkValidPassword(password)
       if (password !== confirmPassword) throw new UserInputError('Passwords do not match')
+      const errorMessages = checkValidPassword(password)
       if (errorMessages.length) throw new UserInputError(errorMessages)
       const accessToken = await AccessToken.query().where('token', token).first()
       if (!accessToken) throw new AuthenticationError('Access token is not valid')
       const { isActive, tokenExpiration, advitoUserId } = accessToken
       if (!isActive || tokenExpiration < new Date()) throw new AuthenticationError('Access token is not valid')
       const { saltHashed, passwordHashed } = saltHash(password)
-      await AdvitoUser.query().patch({ pwd: passwordHashed, userSalt: saltHashed }).where('id', advitoUserId)
+      await AdvitoUser.query().patchAndFetchById(advitoUserId, { pwd: passwordHashed, userSalt: saltHashed })
       return true
     },
     createUser: async (_, {
@@ -175,6 +175,16 @@ export default {
         ...user,
         roleIds
       }
+    },
+    updateUserPassword: async (_, {id, password, confirmPassword}) => {
+      const checkUserId = await AdvitoUser.query().findById(id).first()
+      if (!checkUserId) throw new UserInputError('User not found')
+      if (password !== confirmPassword) throw new UserInputError('Passwords do not match')
+      const errorMessages = checkValidPassword(password)
+      if (errorMessages.length) throw new UserInputError(errorMessages)
+      const { saltHashed, passwordHashed } = saltHash(password)
+      await AdvitoUser.query().patchAndFetchById(id, { pwd: passwordHashed, userSalt: saltHashed })
+      return true
     },
     deleteUser: async (_, {
       id

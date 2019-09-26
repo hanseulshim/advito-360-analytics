@@ -53,6 +53,11 @@ extend type Mutation {
     address: String
     roleIds: [Int]
   ): User
+  updateUserPassword(
+    id: Int!
+    password: String!
+    confirmPassword: String!
+  )
   deleteUser(
     id: Int!
   ): Boolean
