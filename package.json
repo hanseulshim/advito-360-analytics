@@ -2,22 +2,36 @@
   "name": "advito-360-analytics",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
+  "dependencies": {
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-scripts": "3.2.0"
+  },
   "scripts": {
-    "start": "cd ./server && yarn start",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "server": "cd ./server && yarn start",
     "alpha": "cd ./server && yarn alpha",
     "beta": "cd ./server && yarn beta",
     "dev": "cd ./server && yarn dev",
     "prod": "cd ./server && yarn prod"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/boostlabscom/advito-360-analytics.git"
+  "eslintConfig": {
+    "extends": "react-app"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/boostlabscom/advito-360-analytics/issues"
-  },
-  "homepage": "https://github.com/boostlabscom/advito-360-analytics#readme"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
