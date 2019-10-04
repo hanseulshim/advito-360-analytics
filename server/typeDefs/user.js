@@ -34,8 +34,8 @@ extend type Mutation {
   createUser(
     clientId: Int!
     username: String!
-    nameLast: String!
     nameFirst: String!
+    nameLast: String!
     isEnabled: Boolean!
     phone: String
     address: String
@@ -46,8 +46,8 @@ extend type Mutation {
   updateUser(
     id: Int!
     username: String!
-    nameLast: String!
     nameFirst: String!
+    nameLast: String!
     isEnabled: Boolean!
     phone: String
     address: String
@@ -57,7 +57,7 @@ extend type Mutation {
     id: Int!
     password: String!
     confirmPassword: String!
-  )
+  ): Boolean
   deleteUser(
     id: Int!
   ): Boolean

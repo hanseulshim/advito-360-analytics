@@ -26,8 +26,8 @@ export default {
       createUser(
         clientId: 1
         username: ""
-        nameLast: ""
         nameFirst: ""
+        nameLast: ""
         isEnabled: true
         phone: null
         address: null
@@ -40,8 +40,8 @@ export default {
       updateUser(
         id: null
         username: ""
-        nameLast: ""
         nameFirst: ""
+        nameLast: ""
         isEnabled: true
         phone: null
         address: null
