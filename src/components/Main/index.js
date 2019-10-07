@@ -20,7 +20,7 @@ const PortalContainer = styled.div`
   margin-top: ${props => props.theme.verticalSpace};
 `
 
-const Portal = () => (
+const Main = () => (
   <Container>
     <MainContainer>
       <PortalContainer>
@@ -30,4 +30,4 @@ const Portal = () => (
   </Container>
 )
 
-export default Portal
+export default Main
