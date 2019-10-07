@@ -9,18 +9,13 @@ import { getToken } from 'helper'
 
 const PrivateRoute = ({ component: Component, ...rest }) => <Route {...rest} render={() => (getToken() ? <Component /> : <Redirect to="/login" />)} />
 
-const App = () => {
-  console.log(getToken())
-  return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <Switch>
-        {/* <Route path="/login" component={Login} /> */}
-        <PrivateRoute path="/" exact component={Main} />
-      </Switch>
-    </ThemeProvider>
-  )
-}
+const App = () => <ThemeProvider theme={theme}>
+  <GlobalStyle />
+  <Switch>
+    {/* <Route path="/login" component={Login} /> */}
+    <PrivateRoute path="/" exact component={Main} />
+  </Switch>
+</ThemeProvider>
 
 PrivateRoute.propTypes = {
   component: PropTypes.func.isRequired
