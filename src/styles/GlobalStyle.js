@@ -5,7 +5,7 @@ export default createGlobalStyle`
   body, #root {
     height: 100%;
   }
-  body {
+  #root {
     margin: 0;
     padding: 0;
     font-family: 'Rubik', sans-serif;
