@@ -5,6 +5,7 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import theme from 'styles/variables'
 import GlobalStyle from 'styles/GlobalStyle'
 import Main from 'components/Main'
+// import Login from 'components/Login'
 import { getToken } from 'helper'
 import 'antd/dist/antd.css'
 
