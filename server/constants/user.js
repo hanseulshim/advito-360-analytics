@@ -21,3 +21,4 @@ export const User = `id
 
 export const SESSION = 'SESSION'
 export const RECOVERY = 'RECOVERY'
+export const IA_ROLES = [4, 5, 6]

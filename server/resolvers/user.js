@@ -176,7 +176,7 @@ export default {
         roleIds
       }
     },
-    updateUserPassword: async (_, {id, password, confirmPassword}) => {
+    updateUserPassword: async (_, { id, password, confirmPassword }) => {
       const checkUserId = await AdvitoUser.query().findById(id).first()
       if (!checkUserId) throw new UserInputError('User not found')
       if (password !== confirmPassword) throw new UserInputError('Passwords do not match')

@@ -7,7 +7,7 @@ import GlobalStyle from 'styles/GlobalStyle'
 import Main from 'components/Main'
 import { getToken } from 'helper'
 
-const PrivateRoute = ({ component: Component, ...rest }) => <Route {...rest} render={() => (getToken() ? <Component /> : <Redirect to="/login" />)} />
+const PrivateRoute = ({ component: Component }) => <Route render={() => (getToken() ? <Component /> : <Redirect to="/login" />)} />
 
 const App = () => <ThemeProvider theme={theme}>
   <GlobalStyle />

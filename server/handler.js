@@ -2,8 +2,10 @@ import { ApolloServer } from 'apollo-server-lambda'
 import typeDefs from './typeDefs'
 import resolvers from './resolvers'
 import playground from './playground'
+import requireAuthDirective from './directives'
 import Knex from 'knex'
 import { Model, knexSnakeCaseMappers } from 'objection'
+import { authenticateUser } from './helper'
 require('dotenv').config()
 
 const db = Knex({
@@ -22,14 +24,13 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: async ({ event }) => {
-    // const sessionToken = event.headers.sessiontoken || ''
-    // return { db }
-    // const user = await authenticateUser(sessionToken, advitoDb)
-    // return { user, db }
+    const sessionToken = event.headers.sessiontoken || ''
+    const user = await authenticateUser(sessionToken)
+    return { user, db }
   },
-  // schemaDirectives: {
-  //   auth: requireAuthDirective
-  // },
+  schemaDirectives: {
+    auth: requireAuthDirective
+  },
   playground
 })
 
