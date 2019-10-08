@@ -32,17 +32,19 @@ const Location = styled.div`
   text-align: center;
 `
 
-const Time = ({ timeZone, zone }) => <Container>
-  <HourZoneContainer>
-    <Hours>{timeZone.format('h:mm')}</Hours>
-    <TimeZone>{timeZone.format('A')}</TimeZone>
-  </HourZoneContainer>
-  <Location>{zone}</Location>
-</Container>
-
-export default Time
+const Time = ({ timeZone, zone }) => (
+  <Container>
+    <HourZoneContainer>
+      <Hours>{timeZone.format('h:mm')}</Hours>
+      <TimeZone>{timeZone.format('A')}</TimeZone>
+    </HourZoneContainer>
+    <Location>{zone}</Location>
+  </Container>
+)
 
 Time.propTypes = {
   timeZone: PropTypes.object.isRequired,
   zone: PropTypes.string.isRequired
 }
+
+export default Time

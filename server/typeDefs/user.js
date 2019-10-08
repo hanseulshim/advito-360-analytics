@@ -28,7 +28,7 @@ extend type Query {
 }
 extend type Mutation {
   login(username: String!, password: String!): Login
-  logout(sessionToken: String!): Boolean
+  logout(sessionToken: String!): Boolean @auth
   sendResetPasswordEmail(email: String!): String
   resetPassword(token: String!, password: String!, confirmPassword: String!): Boolean
   createUser(
@@ -42,7 +42,7 @@ extend type Mutation {
     password: String!
     confirmPassword: String!
     roleIds: [Int]!
-  ): User
+  ): User @auth
   updateUser(
     id: Int!
     username: String!
@@ -52,14 +52,14 @@ extend type Mutation {
     phone: String
     address: String
     roleIds: [Int]
-  ): User
+  ): User @auth
   updateUserPassword(
     id: Int!
     password: String!
     confirmPassword: String!
-  ): Boolean
+  ): Boolean @auth
   deleteUser(
     id: Int!
-  ): Boolean
+  ): Boolean @auth
 }
 `

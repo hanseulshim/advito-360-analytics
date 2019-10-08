@@ -5,9 +5,30 @@ import * as serviceWorker from './serviceWorker'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { HashRouter } from 'react-router-dom'
+import { getToken } from './helper'
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql'
+  uri: 'http://localhost:4000/graphql',
+  request: operation => {
+    // @TODO: DELETE GET TOKEN RETURNING HARD-CODED TOKEN
+    const sessiontoken = getToken()
+    if (sessiontoken) {
+      operation.setContext({
+        headers: {
+          sessiontoken
+        }
+      })
+    }
+  },
+  onError: ({ graphQLErrors }) => {
+    if (graphQLErrors) {
+      graphQLErrors.forEach(({ extensions }) => {
+        if (extensions.code === 401) {
+          console.log('log me out!')
+        }
+      })
+    }
+  }
 })
 
 ReactDOM.render(

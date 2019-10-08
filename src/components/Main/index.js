@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Header from 'components/Header'
+import Application from './Application'
 
 const Container = styled.div`
   max-width: 1600px;
@@ -26,7 +27,7 @@ const Main = () => (
     <MainContainer>
       <Header />
       <PortalContainer>
-        <div>test</div>
+        <Application />
       </PortalContainer>
     </MainContainer>
   </Container>

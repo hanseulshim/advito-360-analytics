@@ -4,6 +4,6 @@ export default `
     enabled: Boolean
   }
   extend type Query {
-    getApplicationList: [Application] @auth
+    applicationList: [Application] @auth
   }
 `

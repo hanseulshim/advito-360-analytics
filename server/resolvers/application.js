@@ -2,7 +2,7 @@ import { AdvitoApplication } from '../models'
 
 export default {
   Query: {
-    getApplicationList: async (_, __, { user }) => {
+    applicationList: async (_, __, { user }) => {
       const AdvitoApplicationList = await AdvitoApplication.query()
         .where('isActive', true)
         .eager('advitoApplicationRole')
