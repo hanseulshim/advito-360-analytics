@@ -8,14 +8,15 @@ import { HashRouter } from 'react-router-dom'
 import { getToken, logout } from './helper'
 
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
+  // uri: 'http://localhost:4000/graphql',
+  uri: 'https://lfl1qiymy7.execute-api.us-east-2.amazonaws.com/dev/graphql',
   request: operation => {
     const sessiontoken = getToken()
     if (sessiontoken) {
       operation.setContext({
         headers: {
-          sessiontoken
-        }
+          sessiontoken,
+        },
       })
     }
   },
@@ -27,7 +28,7 @@ const client = new ApolloClient({
         }
       })
     }
-  }
+  },
 })
 
 ReactDOM.render(
@@ -36,7 +37,7 @@ ReactDOM.render(
       <App />
     </HashRouter>
   </ApolloProvider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 )
 
 // If you want your app to work offline and load faster, you can change
