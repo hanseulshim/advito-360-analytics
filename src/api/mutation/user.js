@@ -16,3 +16,8 @@ export const LOGIN = gql`
     }
   }
 `
+export const LOGOUT = gql`
+  mutation logout($sessionToken: String!) {
+    logout(sessionToken: $sessionToken)
+  }
+`

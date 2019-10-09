@@ -5,7 +5,7 @@ import * as serviceWorker from './serviceWorker'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { HashRouter } from 'react-router-dom'
-import { getToken, logout } from './helper'
+import { getToken, removeUser } from './helper'
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
@@ -23,7 +23,7 @@ const client = new ApolloClient({
     if (graphQLErrors) {
       graphQLErrors.forEach(({ extensions }) => {
         if (extensions.code === 401) {
-          logout()
+          removeUser()
         }
       })
     }

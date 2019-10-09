@@ -23,7 +23,7 @@ export const setUser = user => {
   localStorage.setItem('advito-360-user', JSON.stringify(user))
 }
 
-export const logout = () => {
+export const removeUser = () => {
   localStorage.removeItem('advito-360-user')
   window.location.href = '/#/login'
 }

@@ -4,7 +4,7 @@ import { Title } from 'components/common/Typography'
 import { Link } from 'react-router-dom'
 import User from 'assets/user.png'
 import { getUser } from 'helper'
-// import NavMenu from './NavMenu'
+import NavMenu from './NavMenu'
 
 const Container = styled.div`
   display: flex;
@@ -43,7 +43,7 @@ const SideBarUserInfo = () => {
             <img src={User} alt="avatar" />
           </Link>
         </Avatar>
-        {/* <NavMenu /> */}
+        <NavMenu />
       </TitleContainer>
       <div>
         <Title>{user.displayName}</Title>
