@@ -2,9 +2,16 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Form, Icon, Input, Button } from 'antd'
+import { Redirect } from 'react-router-dom'
+import { useMutation } from '@apollo/react-hooks'
 import advitoLogo from 'assets/advitoLogo.png'
 import Footer from './Footer'
 import ResetPassword from './ResetPassword'
+import { LOGIN } from 'api'
+import ErrorMessage from 'components/common/ErrorMessage'
+import SuccessMessage from 'components/common/SuccessMessage'
+import Loader from 'components/common/Loader'
+import { setUser } from 'helper'
 
 const Container = styled.div`
   width: 100%;
@@ -39,6 +46,7 @@ const ButtonRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1em;
 `
 
 const Link = styled.div`
@@ -51,15 +59,26 @@ const Link = styled.div`
 
 const NormalLoginForm = ({ form }) => {
   const [visible, setVisible] = useState(false)
+  const [login, { loading, error, data }] = useMutation(LOGIN)
 
   const handleSubmit = e => {
     e.preventDefault()
-    form.validateFields((err, values) => {
+    form.validateFields(async (err, { username, password }) => {
       if (!err) {
-        console.log('submitting!')
-        // console.log('Received values of form: ', values)
+        try {
+          await login({
+            variables: { username, password }
+          })
+        } catch (e) {
+          console.error('Error in login form: ', e)
+        }
       }
     })
+  }
+
+  if (data) {
+    setUser(data.login)
+    return <Redirect to="/" />
   }
 
   const { getFieldDecorator } = form
@@ -69,39 +88,45 @@ const NormalLoginForm = ({ form }) => {
       <Title>360 Analytics</Title>
       <FormContainer>
         <Form onSubmit={handleSubmit} className="login-form">
-          <Form.Item>
-            {getFieldDecorator('username', {
-              rules: [
-                { required: true, message: 'Please input your username!' },
-                {
-                  type: 'email',
-                  message: 'The input is not a valid email!'
-                }
-              ]
-            })(
-              <Input
-                prefix={
-                  <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
-                }
-                placeholder="Username"
-              />
-            )}
-          </Form.Item>
-          <Form.Item>
-            {getFieldDecorator('password', {
-              rules: [
-                { required: true, message: 'Please input your password!' }
-              ]
-            })(
-              <Input
-                prefix={
-                  <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
-                }
-                type="password"
-                placeholder="Password"
-              />
-            )}
-          </Form.Item>
+          {loading ? (
+            <Loader />
+          ) : (
+            <>
+              <Form.Item>
+                {getFieldDecorator('username', {
+                  rules: [
+                    { required: true, message: 'Please input your username!' },
+                    {
+                      type: 'email',
+                      message: 'The input is not a valid email!'
+                    }
+                  ]
+                })(
+                  <Input
+                    prefix={
+                      <Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />
+                    }
+                    placeholder="Username"
+                  />
+                )}
+              </Form.Item>
+              <Form.Item>
+                {getFieldDecorator('password', {
+                  rules: [
+                    { required: true, message: 'Please input your password!' }
+                  ]
+                })(
+                  <Input
+                    prefix={
+                      <Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />
+                    }
+                    type="password"
+                    placeholder="Password"
+                  />
+                )}
+              </Form.Item>
+            </>
+          )}
           <Form.Item>
             <ButtonRow>
               <Button
@@ -113,6 +138,8 @@ const NormalLoginForm = ({ form }) => {
               </Button>
               <Link onClick={() => setVisible(true)}>Forgot Password?</Link>
             </ButtonRow>
+            {error && <ErrorMessage error={error} />}
+            {data && <SuccessMessage message={'Success!'} />}
           </Form.Item>
         </Form>
       </FormContainer>
