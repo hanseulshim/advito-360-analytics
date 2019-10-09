@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const IconStyled = styled.i`
+const IconStyled = styled(FontAwesomeIcon)`
   color: ${props => props.info && props.theme.treePoppy};
   border: ${props => props.info && `2px solid ${props.theme.treePoppy}`};
   padding: ${props => props.info && '0.25em .6em'};
@@ -11,12 +12,12 @@ const IconStyled = styled.i`
   margin-left: ${props => props.info && '1em'};
 `
 
-const Icon = ({ className, ...style }) => {
-  return <IconStyled className={className} {...style} />
+const Icon = ({ icon, ...style }) => {
+  return <IconStyled icon={icon} {...style} />
 }
 
 Icon.propTypes = {
-  className: PropTypes.string
+  icon: PropTypes.string
 }
 
 export default Icon

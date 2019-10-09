@@ -18,7 +18,7 @@ const Container = styled.div`
 const PersonIcon = styled(Icon)`
   position: absolute;
   font-size: 1.3em;
-  padding: 0.5em;
+  padding: 5px;
   background: ${props => props.theme.white};
   border: 1px solid ${props => props.theme.grayNurse};
   border-left: none;
@@ -42,10 +42,10 @@ const Sidebar = () => {
   const [collapse, setCollapse] = useState(true)
 
   return collapse ? (
-    <PersonIcon className="fas fa-user" onClick={() => setCollapse(false)} />
+    <PersonIcon icon="user" onClick={() => setCollapse(false)} />
   ) : (
     <Container>
-      <CloseIcon className="fas fa-times" onClick={() => setCollapse(true)} />
+      {/* <CloseIcon icon="fas fa-times" onClick={() => setCollapse(true)} /> */}
       {/* <SidebarUserInfo /> */}
     </Container>
   )

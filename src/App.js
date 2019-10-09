@@ -8,6 +8,12 @@ import Main from 'components/Main'
 import Login from 'components/Login'
 import { getToken } from 'helper'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { fas, faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+
+library.add(fab, fas, faCoffee)
+
 const PrivateRoute = ({ component: Component }) => (
   <Route
     render={() => (getToken() ? <Component /> : <Redirect to="/login" />)}
