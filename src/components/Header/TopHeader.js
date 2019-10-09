@@ -8,10 +8,7 @@ import advitoLogo from 'assets/advitoLogo.png'
 const Container = styled.div`
   display: flex;
   align-items: flex-end;
-  margin-top: ${props => (props.collapse ? '4.2em' : '6.25em')};
-  @media (max-width: 1336px) {
-    margin-top: ${props => (props.collapse ? '4.75em' : '7em')};
-  }
+  margin: 6em 0 3em 0;
 `
 
 const LogoContainer = styled.div`

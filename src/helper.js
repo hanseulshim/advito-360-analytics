@@ -7,6 +7,15 @@ export const getToken = () => {
   } else return ''
 }
 
+export const getUser = () => {
+  if (localStorage.getItem('advito-360-user')) {
+    const user = JSON.parse(localStorage.getItem('advito-360-user'))
+    return { ...user }
+  } else {
+    return {}
+  }
+}
+
 export const setUser = user => {
   if (localStorage.getItem('advito-360-user')) {
     localStorage.removeItem('advito-360-user')

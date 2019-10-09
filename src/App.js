@@ -9,10 +9,10 @@ import Login from 'components/Login'
 import { getToken } from 'helper'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { fas, faCoffee } from '@fortawesome/free-solid-svg-icons'
+import { fas } from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 
-library.add(fab, fas, faCoffee)
+library.add(fab, fas)
 
 const PrivateRoute = ({ component: Component }) => (
   <Route

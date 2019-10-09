@@ -5,7 +5,6 @@ import Application from './Application'
 import Sidebar from 'components/Sidebar'
 
 const Container = styled.div`
-  max-width: 1600px;
   margin: auto;
   display: flex;
   position: relative;
@@ -13,8 +12,8 @@ const Container = styled.div`
 `
 
 const MainContainer = styled.div`
-  flex: 3;
   padding: 0em 4em;
+  width: 100%;
 `
 
 const PortalContainer = styled.div`

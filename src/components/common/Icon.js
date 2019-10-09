@@ -8,7 +8,6 @@ const IconStyled = styled(FontAwesomeIcon)`
   border: ${props => props.info && `2px solid ${props.theme.treePoppy}`};
   padding: ${props => props.info && '0.25em .6em'};
   border-radius: ${props => props.info && '100%'};
-  font-size: ${props => props.info && '80%'};
   margin-left: ${props => props.info && '1em'};
 `
 
