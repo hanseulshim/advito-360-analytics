@@ -24,12 +24,12 @@ type Login {
 }
 
 extend type Query {
-  getUser(id: Int!): User
+  user(id: Int!): User
 }
 extend type Mutation {
   login(username: String!, password: String!): Login
   logout(sessionToken: String!): Boolean @auth
-  sendResetPasswordEmail(email: String!): String
+  sendResetPasswordEmail(appId: Int!, email: String!): String
   resetPassword(token: String!, password: String!, confirmPassword: String!): Boolean
   createUser(
     clientId: Int!

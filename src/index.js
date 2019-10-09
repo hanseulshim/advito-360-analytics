@@ -10,7 +10,6 @@ import { getToken, logout } from './helper'
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
   request: operation => {
-    // @TODO: DELETE GET TOKEN RETURNING HARD-CODED TOKEN
     const sessiontoken = getToken()
     if (sessiontoken) {
       operation.setContext({
