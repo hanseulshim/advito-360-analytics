@@ -1,7 +1,7 @@
-import React from 'react'
-import styled from 'styled-components'
-import Header from 'components/Header'
-import Application from './Application'
+import React from 'react';
+import styled from 'styled-components';
+import Header from 'components/Header';
+import Application from './Application';
 
 const Container = styled.div`
   max-width: 1600px;
@@ -9,28 +9,22 @@ const Container = styled.div`
   display: flex;
   position: relative;
   height: 100%;
-`
-
-const MainContainer = styled.div`
-  flex: 3;
-  padding: 0em 4em;
-`
+`;
 
 const PortalContainer = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
   margin-top: ${props => props.theme.verticalSpace};
-`
+`;
 
 const Main = () => (
   <Container>
-    <MainContainer>
+    <PortalContainer>
       <Header />
-      <PortalContainer>
-        <Application />
-      </PortalContainer>
-    </MainContainer>
+      <Application />
+    </PortalContainer>
   </Container>
-)
+);
 
-export default Main
+export default Main;
