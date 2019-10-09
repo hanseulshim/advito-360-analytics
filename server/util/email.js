@@ -1,14 +1,22 @@
 import AWS from 'aws-sdk'
 import { EmailTemplate } from '../models'
-import { EMAIL_SENDER, EMAIL_BCC, ADVITO_AIR_APPLICATION } from '../config'
+import { EMAIL_SENDER, EMAIL_BCC } from '../constants'
 const ses = new AWS.SES({
   accessKeyId: process.env.AWS_SES_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SES_SECRET_ACCESS_KEY,
   region: process.env.AWS_SES_REGION
 })
 
-export const sendEmail = async (templateName, recipient, placeholders) => {
-  const { emailSubject, emailBody } = await EmailTemplate.query().where('templateName', templateName).where('advitoApplicationId', ADVITO_AIR_APPLICATION).first()
+export const sendEmail = async (
+  templateName,
+  recipient,
+  placeholders,
+  applicationId
+) => {
+  const { emailSubject, emailBody } = await EmailTemplate.query()
+    .where('templateName', templateName)
+    .where('advitoApplicationId', applicationId)
+    .first()
   let message = emailBody
   Object.keys(placeholders).forEach(key => {
     const regex = new RegExp(String.raw`\[\[${key}]]`, 'g')

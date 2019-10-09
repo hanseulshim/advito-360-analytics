@@ -30,7 +30,8 @@
     "alpha": "cd ./server && yarn alpha",
     "beta": "cd ./server && yarn beta",
     "dev": "cd ./server && yarn dev",
-    "prod": "cd ./server && yarn prod"
+    "prod": "cd ./server && yarn prod",
+    "all": "cd ./server && yarn all"
   },
   "eslintConfig": {
     "extends": "react-app"

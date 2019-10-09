@@ -6,7 +6,7 @@ export default {
     headers: { sessiontoken: 'MY^PR3TTYP0NY' },
     query: `
     {
-      getUser(id: null) {
+      user(id: null) {
         ${User}
       }
     }`

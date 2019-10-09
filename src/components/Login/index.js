@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Form, Icon, Input, Button } from 'antd'
 import advitoLogo from 'assets/advitoLogo.png'
 import Footer from './Footer'
+import ResetPassword from './ResetPassword'
 
 const Container = styled.div`
   width: 100%;
@@ -34,13 +35,29 @@ const Title = styled.div`
   margin: 2.5em 0 0.5em 0;
   color: ${props => props.theme.white};
 `
+const ButtonRow = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const Link = styled.div`
+  color: ${props => props.theme.white};
+  cursor: pointer;
+  :hover {
+    opacity: 0.7;
+  }
+`
 
 const NormalLoginForm = ({ form }) => {
+  const [visible, setVisible] = useState(false)
+
   const handleSubmit = e => {
     e.preventDefault()
     form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values)
+        console.log('submitting!')
+        // console.log('Received values of form: ', values)
       }
     })
   }
@@ -55,7 +72,11 @@ const NormalLoginForm = ({ form }) => {
           <Form.Item>
             {getFieldDecorator('username', {
               rules: [
-                { required: true, message: 'Please input your username!' }
+                { required: true, message: 'Please input your username!' },
+                {
+                  type: 'email',
+                  message: 'The input is not a valid email!'
+                }
               ]
             })(
               <Input
@@ -69,7 +90,7 @@ const NormalLoginForm = ({ form }) => {
           <Form.Item>
             {getFieldDecorator('password', {
               rules: [
-                { required: true, message: 'Please input your Password!' }
+                { required: true, message: 'Please input your password!' }
               ]
             })(
               <Input
@@ -82,16 +103,20 @@ const NormalLoginForm = ({ form }) => {
             )}
           </Form.Item>
           <Form.Item>
-            <Button
-              type="danger"
-              htmlType="submit"
-              className="login-form-button"
-            >
-              Log in
-            </Button>
+            <ButtonRow>
+              <Button
+                type="danger"
+                htmlType="submit"
+                className="login-form-button"
+              >
+                Log in
+              </Button>
+              <Link onClick={() => setVisible(true)}>Forgot Password?</Link>
+            </ButtonRow>
           </Form.Item>
         </Form>
       </FormContainer>
+      <ResetPassword visible={visible} setVisible={setVisible} />
       <Footer />
     </Container>
   )

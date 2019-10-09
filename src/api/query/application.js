@@ -8,3 +8,4 @@ export const APPLICATION_LIST = gql`
     }
   }
 `
+export const ANALYTICS_ID = 3
