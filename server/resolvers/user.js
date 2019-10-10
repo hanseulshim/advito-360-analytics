@@ -125,7 +125,6 @@ export default {
           : appId === ANALYTICS_ID
             ? EMAIL_OPTIONS.ANALYTICS
             : EMAIL_OPTIONS.DEFAULT
-
       const placeholders = {
         NAMEFIRST: user.nameFirst,
         URL: `${option.url}${token}`
