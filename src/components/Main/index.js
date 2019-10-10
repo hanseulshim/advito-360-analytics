@@ -10,6 +10,7 @@ const MainContainer = styled.div`
   display: flex;
   position: relative;
   flex-direction: column;
+  height: 100%;
 `
 
 const PortalContainer = styled.div`
