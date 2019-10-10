@@ -28,6 +28,10 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
+    "start:alpha": "REACT_APP_STAGE=alpha react-app-rewired start",
+    "start:beta": "REACT_APP_STAGE=beta react-app-rewired start",
+    "start:dev": "REACT_APP_STAGE=dev react-app-rewired start",
+    "start:prod": "REACT_APP_STAGE=prod react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "server": "cd ./server && yarn start",
