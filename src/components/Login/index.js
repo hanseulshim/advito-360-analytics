@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom'
 import { useMutation } from '@apollo/react-hooks'
 import advitoLogo from 'assets/advitoLogo.png'
 import Footer from './Footer'
-import ResetPassword from './ResetPassword'
+import ResetPasswordModal from './ResetPasswordModal'
 import { LOGIN } from 'api'
 import ErrorMessage from 'components/common/ErrorMessage'
 import SuccessMessage from 'components/common/SuccessMessage'
@@ -34,6 +34,7 @@ const Logo = styled.img`
 const FormContainer = styled.div`
   padding: 2em 4em;
   width: 30%;
+  max-width: 500px;
 `
 
 const Title = styled.div`
@@ -143,7 +144,7 @@ const NormalLoginForm = ({ form }) => {
           </Form.Item>
         </Form>
       </FormContainer>
-      <ResetPassword visible={visible} setVisible={setVisible} />
+      <ResetPasswordModal visible={visible} setVisible={setVisible} />
       <Footer />
     </Container>
   )

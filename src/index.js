@@ -5,11 +5,11 @@ import * as serviceWorker from './serviceWorker'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { HashRouter } from 'react-router-dom'
-import { getToken, removeUser } from './helper'
+import { getToken, removeUser, getApi } from './helper'
+import history from './history'
 
 const client = new ApolloClient({
-  // uri: 'http://localhost:4000/graphql',
-  uri: 'https://lfl1qiymy7.execute-api.us-east-2.amazonaws.com/dev/graphql',
+  uri: getApi(),
   request: operation => {
     const sessiontoken = getToken()
     if (sessiontoken) {
@@ -33,7 +33,7 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <HashRouter>
+    <HashRouter history={history}>
       <App />
     </HashRouter>
   </ApolloProvider>,

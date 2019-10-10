@@ -1,3 +1,5 @@
+import history from './history'
+
 export const getToken = () => {
   if (localStorage.getItem('advito-360-user')) {
     const { sessionToken } = JSON.parse(localStorage.getItem('advito-360-user'))
@@ -25,5 +27,18 @@ export const setUser = user => {
 
 export const removeUser = () => {
   localStorage.removeItem('advito-360-user')
-  window.location.href = '/#/login'
+  history.push('/login')
+}
+
+export const getApi = () => {
+  const REACT_APP_STAGE = process.env.REACT_APP_STAGE
+  return REACT_APP_STAGE === 'dev'
+    ? 'https://lfl1qiymy7.execute-api.us-east-2.amazonaws.com/dev/graphql'
+    : REACT_APP_STAGE === 'alpha'
+      ? 'https://trfrs1gzn8.execute-api.us-east-2.amazonaws.com/alpha/graphql'
+      : REACT_APP_STAGE === 'beta'
+        ? 'https://7smhjazdr2.execute-api.us-east-2.amazonaws.com/beta/graphql'
+        : REACT_APP_STAGE === 'prod'
+          ? 'https://759byqkv94.execute-api.us-east-2.amazonaws.com/prod/graphql'
+          : 'http://localhost:4000/graphql'
 }

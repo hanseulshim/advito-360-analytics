@@ -18,6 +18,7 @@
     "less-loader": "^5.0.0",
     "moment-timezone": "^0.5.26",
     "prop-types": "^15.7.2",
+    "query-string": "^6.8.3",
     "react": "^16.10.2",
     "react-app-rewired": "^2.1.3",
     "react-dom": "^16.10.2",
@@ -29,13 +30,23 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
-    "eject": "react-app-rewired eject",
     "server": "cd ./server && yarn start",
-    "alpha": "cd ./server && yarn alpha",
-    "beta": "cd ./server && yarn beta",
-    "dev": "cd ./server && yarn dev",
-    "prod": "cd ./server && yarn prod",
-    "all": "cd ./server && yarn all"
+    "eject": "react-app-rewired eject",
+    "deploy:alpha": "REACT_APP_STAGE=alpha react-app-rewired build && aws s3 sync  ./build s3://alpha.boostlabs/360-analytics/ --acl public-read --profile boost",
+    "deploy:alpha:server": "cd ./server && yarn alpha",
+    "deploy:alpha:all": "yarn deploy:alpha & yarn deploy:alpha:server",
+    "deploy:beta": "REACT_APP_STAGE=beta react-app-rewired build && aws s3 sync  ./build s3://beta.boostlabs/360-analytics/ --acl public-read --profile boost",
+    "deploy:beta:server": "cd ./server && yarn beta",
+    "deploy:beta:all": "yarn deploy:beta & yarn deploy:beta:server",
+    "deploy:dev": "REACT_APP_STAGE=dev react-app-rewired build && aws s3 sync  ./build s3://dev.boostlabs/360-analytics/ --acl public-read --profile boost",
+    "deploy:dev:server": "cd ./server && yarn dev",
+    "deploy:dev:all": "yarn deploy:dev & yarn deploy:dev:server",
+    "deploy:prod": "REACT_APP_STAGE=prod react-app-rewired build && aws s3 sync  ./build s3://360-analytics-prod/ --acl public-read --profile advito",
+    "deploy:prod:server": "cd ./server && yarn prod",
+    "deploy:prod:all": "yarn deploy:prod & yarn deploy:prod:server",
+    "deploy:all:front": "deploy:alph && deploy:beta && deploy:dev && deploy:prod",
+    "deploy:all:server": "cd ./server && yarn all",
+    "deploy:all": "deploy:alpha:all && deploy:beta:all && deploy:dev:all && deploy:prod:all"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -52,6 +63,7 @@
       "last 1 safari version"
     ]
   },
+  "homepage": ".",
   "devDependencies": {
     "eslint": "^6.5.1",
     "eslint-config-standard": "^14.1.0",
