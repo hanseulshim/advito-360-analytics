@@ -7,6 +7,15 @@ export const getToken = () => {
   } else return ''
 }
 
+export const getUser = () => {
+  if (localStorage.getItem('advito-360-user')) {
+    const user = JSON.parse(localStorage.getItem('advito-360-user'))
+    return { ...user }
+  } else {
+    return {}
+  }
+}
+
 export const setUser = user => {
   if (localStorage.getItem('advito-360-user')) {
     localStorage.removeItem('advito-360-user')
@@ -14,7 +23,7 @@ export const setUser = user => {
   localStorage.setItem('advito-360-user', JSON.stringify(user))
 }
 
-export const logout = () => {
+export const removeUser = () => {
   localStorage.removeItem('advito-360-user')
   window.location.href = '/#/login'
 }

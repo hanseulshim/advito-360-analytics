@@ -1,16 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
 import { Typography } from 'antd'
+
+const TitleStyled = styled.div`
+  font-weight: 400;
+  color: ${props => props.theme.black};
+`
 
 const { Title: TitleComponent } = Typography
 
-export const Title = ({ level = 1, message }) => (
-  <TitleComponent level={level}>{message}</TitleComponent>
+export const Header = ({ level = 1, children }) => (
+  <TitleComponent level={level}>{children}</TitleComponent>
+)
+
+Header.propTypes = {
+  level: PropTypes.number,
+  children: PropTypes.string
+}
+
+export default Header
+
+export const Title = ({ children, ...rest }) => (
+  <TitleStyled {...rest}>{children}</TitleStyled>
 )
 
 Title.propTypes = {
-  level: PropTypes.number,
-  message: PropTypes.string
+  children: PropTypes.string
 }
-
-export default Title
