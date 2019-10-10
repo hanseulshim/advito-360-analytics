@@ -9,16 +9,17 @@ const Container = styled.div`
   display: flex;
   margin-top: 1.5em;
   justify-content: space-between;
+  margin-top: ${props => props.theme.verticalSpace};
 `
 
 const Card = styled.div`
-  margin-right: 4em;
+  margin-right: 5em;
   background: ${props => props.theme.white};
   border: 1px solid ${props => props.theme.grayNurse};
   border-radius: 10px;
   flex: 1;
   overflow: hidden;
-  min-height: 400px;
+  min-height: 350px;
 `
 
 const CardHeader = styled.div`
@@ -32,6 +33,7 @@ const CardHeader = styled.div`
 const DivisionIcon = styled.img``
 
 const DivisonTitle = styled.div`
+  line-height: 1em;
   flex: 2;
   margin-left: 0.5em;
   color: ${props => props.theme.white};
@@ -56,6 +58,7 @@ const Image = styled.img`
 
 const Link = styled.a`
   color: ${props => props.theme.doveGray};
+  font-size: 1.25em;
 `
 
 const getCardDetails = name => {
@@ -92,7 +95,10 @@ const ApplicationList = () => {
   if (error) {
     return <ErrorMessage error={error} />
   }
-  const { applicationList } = data
+  const applicationList = data.applicationList.sort((a, b) =>
+    a.enabled ? -1 : 1,
+  )
+
   return (
     <Container>
       {applicationList.map((app, i) => {
@@ -124,6 +130,12 @@ const ApplicationList = () => {
                       alt="product icon"
                     />
                   )}
+                </Link>
+                <Link
+                  href={details.link}
+                  disabled={!app.enabled}
+                  target="_blank"
+                >
                   <span>{details.title}</span>
                 </Link>
               </AppList>

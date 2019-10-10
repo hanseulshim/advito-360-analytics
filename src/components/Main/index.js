@@ -21,16 +21,17 @@ const PortalContainer = styled.div`
   flex: 1;
   flex-direction: column;
   margin-top: ${props => props.theme.verticalSpace};
-  padding: 0em 4em;
 `
 
 const Main = () => (
   <Container>
     <Sidebar />
-    <PortalContainer>
+    <MainContainer>
       <Header />
-      <Application />
-    </PortalContainer>
+      <PortalContainer>
+        <Application />
+      </PortalContainer>
+    </MainContainer>
   </Container>
 )
 
