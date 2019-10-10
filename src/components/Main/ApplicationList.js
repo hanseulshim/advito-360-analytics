@@ -4,6 +4,7 @@ import { APPLICATION_LIST } from 'api'
 import Loader from 'components/common/Loader'
 import ErrorMessage from 'components/common/ErrorMessage'
 import styled from 'styled-components'
+import { Title } from 'components/common/Typography'
 
 const Container = styled.div`
   display: flex;
@@ -61,6 +62,10 @@ const Link = styled.a`
   font-size: 1.25em;
 `
 
+const AppTitle = styled(Title)`
+  color: ${props => !props.enabled && props.theme.pumice};
+`
+
 const getCardDetails = name => {
   switch (name) {
     case '360 Analytics':
@@ -68,21 +73,21 @@ const getCardDetails = name => {
         name,
         icon: '360Analytics.png',
         link: '/#',
-        title: 'Travel Manager Dashboard',
+        title: 'Travel Manager Dashboard'
       }
     case 'Hotel':
       return {
         name,
         icon: 'hotel.png',
         link: 'https://hpm.bcdtravel.com',
-        title: 'Hotel Program Manager',
+        title: 'Hotel Program Manager'
       }
     case 'Air':
       return {
         name,
         icon: 'air.png',
         link: 'https://a3-prod1.s3.us-east-2.amazonaws.com/index.html#/login',
-        title: 'Air Program Analytics',
+        title: 'Air Program Analytics'
       }
     default:
       return ''
@@ -96,7 +101,7 @@ const ApplicationList = () => {
     return <ErrorMessage error={error} />
   }
   const applicationList = data.applicationList.sort((a, b) =>
-    a.enabled ? -1 : 1,
+    a.enabled ? -1 : 1
   )
 
   return (
@@ -136,7 +141,9 @@ const ApplicationList = () => {
                   disabled={!app.enabled}
                   target="_blank"
                 >
-                  <span>{details.title}</span>
+                  <AppTitle level={3} enabled={app.enabled}>
+                    {details.title}
+                  </AppTitle>
                 </Link>
               </AppList>
             </CardBody>
