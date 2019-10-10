@@ -9,7 +9,8 @@ export const EMAIL_OPTIONS = {
   },
   ANALYTICS: {
     id: 3,
-    url: 'http://localhost:3000/#/reset-password?t=',
+    url:
+      'http://beta.boostlabs.com/360-analytics/index.html#/reset-password?t=',
     templateName: 'Password 360 Analytics Recovery'
   },
   DEFAULT: {
