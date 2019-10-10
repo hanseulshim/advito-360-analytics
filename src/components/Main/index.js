@@ -18,6 +18,7 @@ const MainContainer = styled.div`
 
 const PortalContainer = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
   margin-top: ${props => props.theme.verticalSpace};
 `

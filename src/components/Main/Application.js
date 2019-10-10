@@ -1,20 +1,24 @@
 import React from 'react'
-import { useQuery } from '@apollo/react-hooks'
-import { APPLICATION_LIST } from 'api'
-import Loader from 'components/common/Loader'
-import ErrorMessage from 'components/common/ErrorMessage'
+import { Title } from 'components/common/Typography'
+import ApplicationList from './ApplicationList'
+import styled from 'styled-components'
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: ${props => props.theme.verticalSpace};
+`
+
+const Products = styled(Title)`
+  font-size: 2em;
+`
 
 const Application = () => {
-  const { loading, error, data } = useQuery(APPLICATION_LIST)
-  if (loading) return <Loader />
-  if (error) {
-    return <ErrorMessage error={error} />
-  }
-  console.log(data)
   return (
-    <div>
-      <div>Loaded</div>
-    </div>
+    <Container>
+      <Products>Products</Products>
+      <ApplicationList />
+    </Container>
   )
 }
 
