@@ -3,6 +3,8 @@ import { useQuery } from '@apollo/react-hooks'
 import { APPLICATION_LIST } from 'api'
 import Loader from 'components/common/Loader'
 import ErrorMessage from 'components/common/ErrorMessage'
+import { Title } from 'components/common/Typography'
+import ApplicationList from './ApplicationList'
 
 const Application = () => {
   const { loading, error, data } = useQuery(APPLICATION_LIST)
@@ -13,7 +15,8 @@ const Application = () => {
   console.log(data)
   return (
     <div>
-      <div>Loaded</div>
+      <Title level={3} message="Products" />
+      <ApplicationList />
     </div>
   )
 }
