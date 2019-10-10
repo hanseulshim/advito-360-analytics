@@ -57,13 +57,13 @@ export default {
         .$relatedQuery('advitoUserSession')
         .where('sessionEnd', null)
         .first()
-      const sessionToken = crypto.randomBytes(16).toString('base64')
       if (session) {
         await user
           .$relatedQuery('advitoUserSession')
           .patch({ sessionEnd: new Date() })
           .where('sessionEnd', null)
       }
+      const sessionToken = crypto.randomBytes(16).toString('base64')
       await user.$relatedQuery('advitoUserSession').insert({
         sessionToken: sessionToken,
         sessionStart: new Date(),
