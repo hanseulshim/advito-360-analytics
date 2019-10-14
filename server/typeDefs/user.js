@@ -24,7 +24,8 @@ type Login {
 }
 
 extend type Query {
-  user(id: Int!): User
+  user(id: Int!): User @auth
+  timezoneList: [String] @auth
 }
 extend type Mutation {
   login(username: String!, password: String!): Login

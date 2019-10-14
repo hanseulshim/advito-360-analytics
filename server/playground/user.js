@@ -9,6 +9,7 @@ export default {
       user(id: null) {
         ${User}
       }
+      timezoneList
     }`
   },
   Mutation: {

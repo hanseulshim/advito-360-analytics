@@ -9,3 +9,9 @@ export const USER = gql`
     }
   }
 `
+
+export const TIMEZONE_LIST = gql`
+  {
+    timezoneList
+  }
+`

@@ -20,6 +20,7 @@ import {
   ANALYTICS_ID
 } from '../constants'
 import crypto from 'crypto'
+import moment from 'moment-timezone'
 
 export default {
   Query: {
@@ -35,7 +36,8 @@ export default {
         ...user,
         roleIds
       }
-    }
+    },
+    timezoneList: () => moment.tz.names()
   },
   Mutation: {
     login: async (_, { username, password }) => {
@@ -76,6 +78,8 @@ export default {
         modified: new Date()
       })
 
+      // console.log(sessionToken, getExpirationDate(SESSION))
+
       return {
         displayName: user.fullName(),
         clientId: user.clientId,
@@ -97,6 +101,7 @@ export default {
       return true
     },
     sendResetPasswordEmail: async (_, { appId, email }) => {
+      console.log('email', email)
       const user = await AdvitoUser.query()
         .where('email', email.toLowerCase())
         .first()
@@ -118,28 +123,29 @@ export default {
         token,
         tokenExpiration: getExpirationDate(RECOVERY)
       })
+      console.log(token)
 
-      const option =
-        appId === AIR_ID
-          ? EMAIL_OPTIONS.AIR
-          : appId === ANALYTICS_ID
-            ? EMAIL_OPTIONS.ANALYTICS
-            : EMAIL_OPTIONS.DEFAULT
-      const placeholders = {
-        NAMEFIRST: user.nameFirst,
-        URL: `${option.url}${token}`
-      }
-      try {
-        await sendEmail(
-          option.templateName,
-          user.email,
-          placeholders,
-          option.id
-        )
-        return `Password has been sent to ${user.email}`
-      } catch (err) {
-        throw new ForbiddenError(err.message)
-      }
+      // const option =
+      //   appId === AIR_ID
+      //     ? EMAIL_OPTIONS.AIR
+      //     : appId === ANALYTICS_ID
+      //       ? EMAIL_OPTIONS.ANALYTICS
+      //       : EMAIL_OPTIONS.DEFAULT
+      // const placeholders = {
+      //   NAMEFIRST: user.nameFirst,
+      //   URL: `${option.url}${token}`
+      // }
+      // try {
+      //   await sendEmail(
+      //     option.templateName,
+      //     user.email,
+      //     placeholders,
+      //     option.id
+      //   )
+      //   return `Password has been sent to ${user.email}`
+      // } catch (err) {
+      //   throw new ForbiddenError(err.message)
+      // }
     },
     resetPassword: async (_, { token, password, confirmPassword }) => {
       if (password !== confirmPassword) {

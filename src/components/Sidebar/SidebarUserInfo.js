@@ -12,6 +12,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 100px;
+  margin-bottom: 3em;
 `
 
 const Avatar = styled.div`

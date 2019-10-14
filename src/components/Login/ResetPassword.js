@@ -57,7 +57,7 @@ const Link = styled.div`
   }
 `
 
-const ResetPasswordForm = ({ form }) => {
+const RestPassword = ({ form }) => {
   const history = useHistory()
   const location = useLocation()
   const [resetPassword, { loading, error, data }] = useMutation(RESET_PASSWORD)
@@ -79,15 +79,13 @@ const ResetPasswordForm = ({ form }) => {
     })
   }
 
-  console.log(token)
-
   const { getFieldDecorator } = form
   return (
     <Container>
       <Logo src={advitoLogo} />
       <Title>Reset Password</Title>
       <FormContainer>
-        <Form onSubmit={handleSubmit} className="login-form">
+        <Form onSubmit={handleSubmit}>
           {loading ? (
             <Loader />
           ) : (
@@ -141,12 +139,10 @@ const ResetPasswordForm = ({ form }) => {
   )
 }
 
-const WrappedResetPasswordForm = Form.create({ name: 'reset_password' })(
-  ResetPasswordForm
-)
+const RestPasswordForm = Form.create({ name: 'restPassword' })(RestPassword)
 
-ResetPasswordForm.propTypes = {
+RestPassword.propTypes = {
   form: PropTypes.object.isRequired
 }
 
-export default WrappedResetPasswordForm
+export default RestPasswordForm

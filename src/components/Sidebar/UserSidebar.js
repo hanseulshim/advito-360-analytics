@@ -1,25 +1,26 @@
 import React from 'react'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 import SidebarUserInfo from './SidebarUserInfo'
 
 const Container = styled.div`
-  background: ${props => props.theme.white};
+  background: ${props => props.theme.alabaster};
   border: 1px solid ${props => props.theme.grayNurse};
+  flex: 1
   padding: 2.5em 4em;
-  height: 100%;
-  position: absolute;
-  opacity: 0.95;
-  width: 300px;
-  z-index: 5;
-  left: 0;
 `
 
-const UserSidebar = () => {
+const UserSidebar = ({ children }) => {
   return (
     <Container>
       <SidebarUserInfo />
+      {children}
     </Container>
   )
+}
+
+UserSidebar.propTypes = {
+  children: PropTypes.object
 }
 
 export default UserSidebar
