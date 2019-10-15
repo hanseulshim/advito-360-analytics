@@ -62,23 +62,24 @@ export default {
       if (session) {
         await user
           .$relatedQuery('advitoUserSession')
-          .patch({ sessionEnd: new Date() })
+          .patch({
+            sessionEnd: moment.utc()
+          })
           .where('sessionEnd', null)
       }
       const sessionToken = crypto.randomBytes(16).toString('base64')
+      const date = moment.utc()
       await user.$relatedQuery('advitoUserSession').insert({
         sessionToken: sessionToken,
-        sessionStart: new Date(),
+        sessionStart: date,
         sessionEnd: null,
         sessionDurationSec: 3600,
         sessionType: 'A3 User',
         sessionExpiration: getExpirationDate(SESSION),
         sessionNote: null,
-        created: new Date(),
-        modified: new Date()
+        created: date,
+        modified: date
       })
-
-      // console.log(sessionToken, getExpirationDate(SESSION))
 
       return {
         displayName: user.fullName(),
@@ -95,13 +96,14 @@ export default {
         .first()
       if (!session) throw new AuthenticationError('User session not found')
       await AdvitoUserSession.query()
-        .patch({ sessionEnd: new Date() })
+        .patch({
+          sessionEnd: moment.utc()
+        })
         .where('sessionToken', sessionToken)
         .where('sessionEnd', null)
       return true
     },
     sendResetPasswordEmail: async (_, { appId, email }) => {
-      console.log('email', email)
       const user = await AdvitoUser.query()
         .where('email', email.toLowerCase())
         .first()
@@ -123,29 +125,28 @@ export default {
         token,
         tokenExpiration: getExpirationDate(RECOVERY)
       })
-      console.log(token)
 
-      // const option =
-      //   appId === AIR_ID
-      //     ? EMAIL_OPTIONS.AIR
-      //     : appId === ANALYTICS_ID
-      //       ? EMAIL_OPTIONS.ANALYTICS
-      //       : EMAIL_OPTIONS.DEFAULT
-      // const placeholders = {
-      //   NAMEFIRST: user.nameFirst,
-      //   URL: `${option.url}${token}`
-      // }
-      // try {
-      //   await sendEmail(
-      //     option.templateName,
-      //     user.email,
-      //     placeholders,
-      //     option.id
-      //   )
-      //   return `Password has been sent to ${user.email}`
-      // } catch (err) {
-      //   throw new ForbiddenError(err.message)
-      // }
+      const option =
+        appId === AIR_ID
+          ? EMAIL_OPTIONS.AIR
+          : appId === ANALYTICS_ID
+          ? EMAIL_OPTIONS.ANALYTICS
+          : EMAIL_OPTIONS.DEFAULT
+      const placeholders = {
+        NAMEFIRST: user.nameFirst,
+        URL: `${option.url}${token}`
+      }
+      try {
+        await sendEmail(
+          option.templateName,
+          user.email,
+          placeholders,
+          option.id
+        )
+        return `Password has been sent to ${user.email}`
+      } catch (err) {
+        throw new ForbiddenError(err.message)
+      }
     },
     resetPassword: async (_, { token, password, confirmPassword }) => {
       if (password !== confirmPassword) {
@@ -160,7 +161,7 @@ export default {
         throw new AuthenticationError('Access token is not valid')
       }
       const { isActive, tokenExpiration, advitoUserId } = accessToken
-      if (!isActive || tokenExpiration < new Date()) {
+      if (!isActive || tokenExpiration < moment.utc()) {
         throw new AuthenticationError('Access token is not valid')
       }
       const { saltHashed, passwordHashed } = saltHash(password)

@@ -6,7 +6,14 @@ import requireAuthDirective from './directives'
 import Knex from 'knex'
 import { Model, knexSnakeCaseMappers } from 'objection'
 import { authenticateUser } from './helper'
+import pg from 'pg'
+import moment from 'moment'
 require('dotenv').config()
+const types = pg.types
+const TIMESTAMP_OID = 1114
+types.setTypeParser(TIMESTAMP_OID, val =>
+  val === null ? null : moment.utc(val)
+)
 
 const db = Knex({
   client: 'pg',
