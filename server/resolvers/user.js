@@ -84,6 +84,7 @@ export default {
       })
 
       return {
+        id: user.id,
         displayName: user.fullName(),
         clientId: user.clientId,
         profilePicturePath: user.profilePicturePath,
@@ -132,8 +133,8 @@ export default {
         appId === AIR_ID
           ? EMAIL_OPTIONS.AIR
           : appId === ANALYTICS_ID
-            ? EMAIL_OPTIONS.ANALYTICS
-            : EMAIL_OPTIONS.DEFAULT
+          ? EMAIL_OPTIONS.ANALYTICS
+          : EMAIL_OPTIONS.DEFAULT
       const placeholders = {
         NAMEFIRST: user.nameFirst,
         URL: `${option.url}${token}`

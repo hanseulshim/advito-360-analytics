@@ -8,6 +8,7 @@ export const SEND_RESET_PASSWORD = gql`
 export const LOGIN = gql`
   mutation login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
+      id
       displayName
       clientId
       profilePicturePath
@@ -32,5 +33,49 @@ export const RESET_PASSWORD = gql`
       password: $password
       confirmPassword: $confirmPassword
     )
+  }
+`
+export const UPDATE_USER = gql`
+  mutation updateUser(
+    $id: Int!
+    $username: String
+    $nameFirst: String
+    $nameLast: String
+    $isEnabled: Boolean
+    $phone: String
+    $address: String
+    $defaultTimezone: String
+    $defaultLanguage: String
+    $defaultDateFormat: String
+    $roleIds: [Int]
+  ) {
+    updateUser(
+      id: $id
+      username: $username
+      nameFirst: $nameFirst
+      nameLast: $nameLast
+      isEnabled: $isEnabled
+      phone: $phone
+      address: $address
+      defaultTimezone: $defaultTimezone
+      defaultLanguage: $defaultLanguage
+      defaultDateFormat: $defaultDateFormat
+      roleIds: $roleIds
+    ) {
+      id
+      clientId
+      username
+      nameLast
+      nameFirst
+      isEnabled
+      email
+      phone
+      profilePicturePath
+      defaultTimezone
+      defaultLanguage
+      defaultDateFormat
+      address
+      roleIds
+    }
   }
 `

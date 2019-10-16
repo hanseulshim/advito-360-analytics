@@ -16,6 +16,7 @@ type User {
   roleIds: [Int]
 }
 type Login {
+  id: Int
   displayName: String
   clientId: Int
   profilePicturePath: String

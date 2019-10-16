@@ -1,4 +1,5 @@
-export const Login = `displayName
+export const Login = `id
+        displayName
         clientId
         profilePicturePath
         sessionToken
