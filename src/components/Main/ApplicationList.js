@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import { APPLICATION_LIST } from 'api'
 import Loader from 'components/common/Loader'
@@ -53,7 +53,7 @@ const App = styled.div`
   align-items: center;
   margin: 0.5em 0;
   color: ${props => props.theme.doveGray};
-  font-size: 1.25em;
+  font-size: 1em;
   cursor: ${props => (!props.enabled ? 'no-drop' : 'pointer')};
 `
 
