@@ -9,7 +9,8 @@ export default {
       user(id: null) {
         ${User}
       }
-      timezoneList
+      timeZoneList
+      dateFormatList
     }`
   },
   Mutation: {
@@ -40,12 +41,15 @@ export default {
       }
       updateUser(
         id: null
-        username: ""
-        nameFirst: ""
-        nameLast: ""
-        isEnabled: true
+        username: null
+        nameFirst: null
+        nameLast: null
+        isEnabled: null
         phone: null
         address: null
+        defaultTimezone: null
+        defaultLanguage: null
+        defaultDateFormat: null
         roleIds: []
       ) {
         ${User}

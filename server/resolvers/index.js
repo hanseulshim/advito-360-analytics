@@ -2,7 +2,7 @@ import { GraphQLScalarType } from 'graphql'
 import { Kind } from 'graphql/language'
 import user from './user'
 import application from './application'
-import merge from 'lodash.merge'
+import merge from 'lodash/merge'
 import moment from 'moment'
 
 export default {

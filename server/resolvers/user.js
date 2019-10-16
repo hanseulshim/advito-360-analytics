@@ -21,6 +21,7 @@ import {
 } from '../constants'
 import crypto from 'crypto'
 import moment from 'moment-timezone'
+import isEmpty from 'lodash/isEmpty'
 
 export default {
   Query: {
@@ -37,7 +38,8 @@ export default {
         roleIds
       }
     },
-    timezoneList: () => moment.tz.names()
+    timeZoneList: () => moment.tz.names(),
+    dateFormatList: () => ['MM/DD/YY', 'DD/MM/YY', 'YY/MM/DD']
   },
   Mutation: {
     login: async (_, { username, password }) => {
@@ -130,8 +132,8 @@ export default {
         appId === AIR_ID
           ? EMAIL_OPTIONS.AIR
           : appId === ANALYTICS_ID
-          ? EMAIL_OPTIONS.ANALYTICS
-          : EMAIL_OPTIONS.DEFAULT
+            ? EMAIL_OPTIONS.ANALYTICS
+            : EMAIL_OPTIONS.DEFAULT
       const placeholders = {
         NAMEFIRST: user.nameFirst,
         URL: `${option.url}${token}`
@@ -238,40 +240,64 @@ export default {
         isEnabled,
         phone,
         address,
+        defaultTimezone,
+        defaultLanguage,
+        defaultDateFormat,
         roleIds = []
       }
     ) => {
-      const checkUserId = await AdvitoUser.query()
+      const checkUser = await AdvitoUser.query()
         .findById(id)
         .first()
-      if (!checkUserId) throw new UserInputError('User not found')
-      const checkUserEmail = await AdvitoUser.query()
-        .where('username', username)
-        .first()
-      if (checkUserEmail && parseInt(checkUserEmail.id) !== id) {
+      if (!checkUser) throw new UserInputError('User not found')
+      if (checkUser.email && parseInt(checkUser.id) !== id) {
         throw new UserInputError('User email already exists')
       }
-      const checkEmail = validateEmail(username)
-      if (!checkEmail) throw new UserInputError('Username is invalid')
-      if (!nameLast || !nameFirst) {
-        throw new UserInputError('Name cannot be blank')
+      const params = {}
+      if (username) {
+        const checkEmail = validateEmail(username)
+        if (!checkEmail) throw new UserInputError('Username is invalid')
+        const email = username.toLowerCase()
+        params.username = email
+        params.email = email
       }
-      if (!roleIds.length) throw new UserInputError('User needs a role')
-      const email = username.toLowerCase()
+      if (nameLast) {
+        if (!nameLast) throw new UserInputError('Name cannot be blank')
+        params.nameLast = nameLast
+      }
+      if (nameFirst) {
+        if (!nameFirst) throw new UserInputError('Name cannot be blank')
+        params.nameFirst = nameFirst
+      }
+      if (isEnabled) {
+        params.isEnabled = isEnabled
+      }
+      if (phone) {
+        params.phone = phone
+      }
+      if (address) {
+        params.address = address
+      }
+      if (defaultTimezone) {
+        params.defaultTimezone = defaultTimezone
+      }
+      if (defaultLanguage) {
+        params.defaultLanguage = defaultLanguage
+      }
+      if (defaultDateFormat) {
+        params.defaultDateFormat = defaultDateFormat
+      }
+      if (isEmpty(params)) return { ...checkUser, roleIds }
       const user = await AdvitoUser.query().patchAndFetchById(id, {
-        username: email,
-        nameLast,
-        nameFirst,
-        isEnabled,
-        email,
-        phone,
-        address
+        ...params
       })
-      await user.$relatedQuery('advitoUserRoleLink').delete()
-      const roleIdsInsert = roleIds.map(advitoRoleId => ({
-        advitoRoleId
-      }))
-      await user.$relatedQuery('advitoUserRoleLink').insert(roleIdsInsert)
+      if (roleIds.length) {
+        await user.$relatedQuery('advitoUserRoleLink').delete()
+        const roleIdsInsert = roleIds.map(advitoRoleId => ({
+          advitoRoleId
+        }))
+        await user.$relatedQuery('advitoUserRoleLink').insert(roleIdsInsert)
+      }
       return {
         ...user,
         roleIds

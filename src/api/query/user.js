@@ -10,8 +10,14 @@ export const USER = gql`
   }
 `
 
-export const TIMEZONE_LIST = gql`
+export const TIME_ZONE_LIST = gql`
   {
-    timezoneList
+    timeZoneList
+  }
+`
+
+export const DATE_FORMAT_LIST = gql`
+  {
+    dateFormatList
   }
 `
