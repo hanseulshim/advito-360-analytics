@@ -1,5 +1,6 @@
 import React from 'react'
-import { withRouter, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { useLocation } from 'react-router'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 
@@ -53,22 +54,25 @@ const NavItems = [
   }
 ]
 
-const Navigation = ({ location }) => (
-  <Container>
-    {NavItems.map((nav, index) => (
-      <NavItem
-        key={index}
-        to={nav.link}
-        replace={location.pathname.includes(nav.link)}
-      >
-        {nav.title}
-      </NavItem>
-    ))}
-  </Container>
-)
+const Navigation = () => {
+  const location = useLocation()
+  return (
+    <Container>
+      {NavItems.map((nav, index) => (
+        <NavItem
+          key={index}
+          to={nav.link}
+          replace={location.pathname.includes(nav.link)}
+        >
+          {nav.title}
+        </NavItem>
+      ))}
+    </Container>
+  )
+}
 
 Navigation.propTypes = {
   location: PropTypes.object.isRequired
 }
 
-export default withRouter(Navigation)
+export default Navigation
