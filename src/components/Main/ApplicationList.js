@@ -9,18 +9,18 @@ import { Title } from 'components/common/Typography'
 const Container = styled.div`
   display: flex;
   margin-top: 1.5em;
-  justify-content: space-between;
-  margin-top: ${props => props.theme.verticalSpace};
 `
 
 const Card = styled.div`
-  margin-right: 5em;
+  margin-right: 2em;
   background: ${props => props.theme.white};
   border: 1px solid ${props => props.theme.grayNurse};
   border-radius: 10px;
   flex: 1;
   overflow: hidden;
-  min-height: 350px;
+  min-height: 300px;
+  max-width: 275px;
+  min-width: 200px;
 `
 
 const CardHeader = styled.div`
@@ -38,7 +38,7 @@ const DivisonTitle = styled.div`
   flex: 2;
   margin-left: 0.5em;
   color: ${props => props.theme.white};
-  font-size: 2em;
+  font-size: 1.25em;
 `
 
 const CardBody = styled.div`
@@ -64,6 +64,7 @@ const Link = styled.a`
 
 const AppTitle = styled(Title)`
   color: ${props => !props.enabled && props.theme.pumice};
+  font-size: 1em;
 `
 
 const getCardDetails = name => {
@@ -141,7 +142,7 @@ const ApplicationList = () => {
                   disabled={!app.enabled}
                   target="_blank"
                 >
-                  <AppTitle level={3} enabled={app.enabled}>
+                  <AppTitle level={4} enabled={app.enabled}>
                     {details.title}
                   </AppTitle>
                 </Link>
