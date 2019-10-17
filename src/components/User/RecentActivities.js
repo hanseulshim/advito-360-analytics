@@ -24,7 +24,6 @@ const Activity = styled.div`
 const RecentActivities = () => {
   const { loading, error, data } = useQuery(LOG_LIST)
   const logList = data ? data.logList : []
-  console.log(logList)
   return loading ? (
     <Loader />
   ) : (
