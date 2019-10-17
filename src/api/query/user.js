@@ -32,3 +32,13 @@ export const DATE_FORMAT_LIST = gql`
     dateFormatList
   }
 `
+export const LOG_LIST = gql`
+  {
+    logList {
+      id
+      advitoUserId
+      activity
+      created
+    }
+  }
+`

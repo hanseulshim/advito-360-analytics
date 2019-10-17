@@ -34,6 +34,14 @@ export class AdvitoUser extends Model {
           from: 'advitoUser.id',
           to: 'accessToken.advitoUserId'
         }
+      },
+      advitoUserLog: {
+        relation: Model.HasManyRelation,
+        modelClass: AdvitoUserLog,
+        join: {
+          from: 'advitoUser.id',
+          to: 'advitoUserLog.advitoUserId'
+        }
       }
     }
   }
@@ -73,5 +81,24 @@ export class AccessToken extends Model {
 export class EmailTemplate extends Model {
   static get tableName () {
     return 'emailTemplate'
+  }
+}
+
+export class AdvitoUserLog extends Model {
+  static get tableName () {
+    return 'advitoUserLog'
+  }
+
+  static get relationMappings () {
+    return {
+      advitoUser: {
+        relation: Model.HasManyRelation,
+        modelClass: AdvitoUser,
+        join: {
+          from: 'advitoUserLog.advitoUserId',
+          to: 'advitoUser.id'
+        }
+      }
+    }
   }
 }

@@ -4,6 +4,8 @@ import { Route, Switch } from 'react-router-dom'
 import UserSidebar from 'components/Sidebar/UserSidebar'
 import Header from 'components/Header'
 import UserProfile from './UserProfile'
+import MyApplications from './MyApplications'
+import RecentActivities from './RecentActivities'
 
 const Container = styled.div`
   margin: auto;
@@ -22,7 +24,10 @@ const User = () => {
   return (
     <Container>
       <UserSidebar>
-        <div>My Applications</div>
+        <>
+          <MyApplications />
+          <RecentActivities />
+        </>
       </UserSidebar>
       <Content>
         <Header />

@@ -23,11 +23,18 @@ type Login {
   sessionToken: String
   roleIds: [Int]
 }
+type AdvitoUserLog {
+  id: Int
+  advitoUserId: Int
+  activity: String
+  created: Date
+}
 
 extend type Query {
   user(id: Int!): User @auth
   timeZoneList: [String] @auth
   dateFormatList: [String] @auth
+  logList: [AdvitoUserLog] @auth
 }
 extend type Mutation {
   login(username: String!, password: String!): Login

@@ -44,16 +44,10 @@ const UserProfile = ({ form }) => {
       variables: { id }
     }
   )
-  const {
-    loading: timeZoneLoading,
-    data: timeZoneData,
-    error: timeZoneError
-  } = useQuery(TIME_ZONE_LIST)
-  const {
-    loading: dateFormatLoading,
-    data: dateFormatData,
-    error: dateFormatError
-  } = useQuery(DATE_FORMAT_LIST)
+  const { data: timeZoneData, error: timeZoneError } = useQuery(TIME_ZONE_LIST)
+  const { data: dateFormatData, error: dateFormatError } = useQuery(
+    DATE_FORMAT_LIST
+  )
   const timeZoneList = timeZoneData ? timeZoneData.timeZoneList : []
   const dateFormatList = dateFormatData ? dateFormatData.dateFormatList : []
 
@@ -110,36 +104,28 @@ const UserProfile = ({ form }) => {
                   ]
                 })(<Input placeholder="Username" />)}
               </Item>
-              {dateFormatLoading ? (
-                <Loader />
-              ) : (
-                <Item label="DATE/TIME FORMAT">
-                  {getFieldDecorator('defaultDateFormat')(
-                    <Select showSearch>
-                      {dateFormatList.map(date => (
-                        <Option key={date} value={date}>
-                          {date}
-                        </Option>
-                      ))}
-                    </Select>
-                  )}
-                </Item>
-              )}
-              {timeZoneLoading ? (
-                <Loader />
-              ) : (
-                <Item label="TIMEZONE">
-                  {getFieldDecorator('defaultTimezone')(
-                    <Select showSearch>
-                      {timeZoneList.map(zone => (
-                        <Option key={zone} value={zone}>
-                          {zone}
-                        </Option>
-                      ))}
-                    </Select>
-                  )}
-                </Item>
-              )}
+              <Item label="DATE/TIME FORMAT">
+                {getFieldDecorator('defaultDateFormat')(
+                  <Select showSearch>
+                    {dateFormatList.map(date => (
+                      <Option key={date} value={date}>
+                        {date}
+                      </Option>
+                    ))}
+                  </Select>
+                )}
+              </Item>
+              <Item label="TIMEZONE">
+                {getFieldDecorator('defaultTimezone')(
+                  <Select showSearch>
+                    {timeZoneList.map(zone => (
+                      <Option key={zone} value={zone}>
+                        {zone}
+                      </Option>
+                    ))}
+                  </Select>
+                )}
+              </Item>
               <Item label="PHONE">
                 {getFieldDecorator('phone')(<Input placeholder="Phone" />)}
               </Item>

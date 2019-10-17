@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Typography } from 'antd'
 
 const TitleStyled = styled.div`
+  margin-bottom: 0.5em;
   font-weight: 400;
   color: ${props => props.theme.black};
 `

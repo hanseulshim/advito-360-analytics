@@ -11,6 +11,12 @@ export default {
       }
       timeZoneList
       dateFormatList
+      logList {
+        id
+        advitoUserId
+        activity
+        created
+      }
     }`
   },
   Mutation: {

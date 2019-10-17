@@ -3,7 +3,12 @@ import {
   ForbiddenError,
   UserInputError
 } from 'apollo-server-lambda'
-import { AdvitoUser, AdvitoUserSession, AccessToken } from '../models'
+import {
+  AdvitoUser,
+  AdvitoUserSession,
+  AccessToken,
+  AdvitoUserLog
+} from '../models'
 import {
   saltHash,
   generateAccessToken,
@@ -39,7 +44,12 @@ export default {
       }
     },
     timeZoneList: () => moment.tz.names(),
-    dateFormatList: () => ['MM/DD/YY', 'DD/MM/YY', 'YY/MM/DD']
+    dateFormatList: () => ['MM/DD/YY', 'DD/MM/YY', 'YY/MM/DD'],
+    logList: async (_, __, { user }) =>
+      AdvitoUserLog.query()
+        .where('advitoUserId', user.id)
+        .orderBy('created', 'desc')
+        .limit(5)
   },
   Mutation: {
     login: async (_, { username, password }) => {
@@ -133,8 +143,8 @@ export default {
         appId === AIR_ID
           ? EMAIL_OPTIONS.AIR
           : appId === ANALYTICS_ID
-            ? EMAIL_OPTIONS.ANALYTICS
-            : EMAIL_OPTIONS.DEFAULT
+          ? EMAIL_OPTIONS.ANALYTICS
+          : EMAIL_OPTIONS.DEFAULT
       const placeholders = {
         NAMEFIRST: user.nameFirst,
         URL: `${option.url}${token}`

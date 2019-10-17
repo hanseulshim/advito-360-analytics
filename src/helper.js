@@ -1,4 +1,9 @@
 import history from './history'
+import moment from 'moment'
+
+export const formatDate = date => {
+  return date ? moment(date).format('MMMM DD, YYYY') : ''
+}
 
 export const getToken = () => {
   if (localStorage.getItem('advito-360-user')) {
