@@ -22,7 +22,9 @@ const Activity = styled.div`
 `
 
 const RecentActivities = () => {
-  const { loading, error, data } = useQuery(LOG_LIST)
+  const { loading, error, data } = useQuery(LOG_LIST, {
+    fetchPolicy: 'cache-and-network'
+  })
   const logList = data ? data.logList : []
   return loading ? (
     <Loader />

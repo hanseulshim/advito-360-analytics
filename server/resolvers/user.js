@@ -92,6 +92,10 @@ export default {
         created: date,
         modified: date
       })
+      await user.$relatedQuery('advitoUserLog').insert({
+        advitoUserId: user.id,
+        activity: 'User login'
+      })
 
       return {
         id: user.id,
@@ -143,8 +147,8 @@ export default {
         appId === AIR_ID
           ? EMAIL_OPTIONS.AIR
           : appId === ANALYTICS_ID
-          ? EMAIL_OPTIONS.ANALYTICS
-          : EMAIL_OPTIONS.DEFAULT
+            ? EMAIL_OPTIONS.ANALYTICS
+            : EMAIL_OPTIONS.DEFAULT
       const placeholders = {
         NAMEFIRST: user.nameFirst,
         URL: `${option.url}${token}`
@@ -156,6 +160,10 @@ export default {
           placeholders,
           option.id
         )
+        await user.$relatedQuery('advitoUserLog').insert({
+          advitoUserId: user.id,
+          activity: 'User sent reset password email'
+        })
         return `Password has been sent to ${user.email}`
       } catch (err) {
         throw new ForbiddenError(err.message)
@@ -178,9 +186,13 @@ export default {
         throw new AuthenticationError('Access token is not valid')
       }
       const { saltHashed, passwordHashed } = saltHash(password)
-      await AdvitoUser.query().patchAndFetchById(advitoUserId, {
+      const user = await AdvitoUser.query().patchAndFetchById(advitoUserId, {
         pwd: passwordHashed,
         userSalt: saltHashed
+      })
+      await user.$relatedQuery('advitoUserLog').insert({
+        advitoUserId: user.id,
+        activity: 'User password reset'
       })
       return true
     },
@@ -236,6 +248,10 @@ export default {
         advitoRoleId
       }))
       await user.$relatedQuery('advitoUserRoleLink').insert(roleIdsInsert)
+      await user.$relatedQuery('advitoUserLog').insert({
+        advitoUserId: user.id,
+        activity: 'User created'
+      })
       return {
         ...user,
         roleIds
@@ -309,16 +325,20 @@ export default {
         }))
         await user.$relatedQuery('advitoUserRoleLink').insert(roleIdsInsert)
       }
+      await user.$relatedQuery('advitoUserLog').insert({
+        advitoUserId: user.id,
+        activity: 'User info updated'
+      })
       return {
         ...user,
         roleIds
       }
     },
     updateUserPassword: async (_, { id, password, confirmPassword }) => {
-      const checkUserId = await AdvitoUser.query()
+      const user = await AdvitoUser.query()
         .findById(id)
         .first()
-      if (!checkUserId) throw new UserInputError('User not found')
+      if (!user) throw new UserInputError('User not found')
       if (password !== confirmPassword) {
         throw new UserInputError('Passwords do not match')
       }
@@ -328,6 +348,10 @@ export default {
       await AdvitoUser.query().patchAndFetchById(id, {
         pwd: passwordHashed,
         userSalt: saltHashed
+      })
+      await user.$relatedQuery('advitoUserLog').insert({
+        advitoUserId: user.id,
+        activity: 'User password changed'
       })
       return 'Password has been changed'
     },
