@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import { APPLICATION_LIST } from 'api'
 import Loader from 'components/common/Loader'
@@ -9,18 +10,18 @@ import { Title } from 'components/common/Typography'
 const Container = styled.div`
   display: flex;
   margin-top: 1.5em;
-  justify-content: space-between;
-  margin-top: ${props => props.theme.verticalSpace};
 `
 
 const Card = styled.div`
-  margin-right: 5em;
+  margin-right: 2em;
   background: ${props => props.theme.white};
   border: 1px solid ${props => props.theme.grayNurse};
   border-radius: 10px;
   flex: 1;
   overflow: hidden;
-  min-height: 350px;
+  min-height: 300px;
+  max-width: 275px;
+  min-width: 200px;
 `
 
 const CardHeader = styled.div`
@@ -38,7 +39,7 @@ const DivisonTitle = styled.div`
   flex: 2;
   margin-left: 0.5em;
   color: ${props => props.theme.white};
-  font-size: 2em;
+  font-size: 1.25em;
 `
 
 const CardBody = styled.div`
@@ -47,23 +48,22 @@ const CardBody = styled.div`
   margin: 1.5em 2em;
 `
 
-const AppList = styled.div`
+const App = styled.div`
   display: flex;
   align-items: center;
   margin: 0.5em 0;
+  color: ${props => props.theme.doveGray};
+  font-size: 1em;
+  cursor: ${props => (!props.enabled ? 'no-drop' : 'pointer')};
 `
 
 const Image = styled.img`
   margin-right: 0.5em;
 `
 
-const Link = styled.a`
-  color: ${props => props.theme.doveGray};
-  font-size: 1.25em;
-`
-
 const AppTitle = styled(Title)`
   color: ${props => !props.enabled && props.theme.pumice};
+  font-size: 1em;
 `
 
 const getCardDetails = name => {
@@ -95,6 +95,7 @@ const getCardDetails = name => {
 }
 
 const ApplicationList = () => {
+  const history = useHistory()
   const { loading, error, data } = useQuery(APPLICATION_LIST)
   if (loading) return <Loader />
   if (error) {
@@ -103,6 +104,17 @@ const ApplicationList = () => {
   const applicationList = data.applicationList.sort((a, b) =>
     a.enabled ? -1 : 1
   )
+
+  const handleRoute = (details, enabled) => {
+    if (!enabled) {
+      return
+    }
+    if (details.name === '360 Analytics') {
+      history.push('/dashboard')
+    } else {
+      window.open(details.link)
+    }
+  }
 
   return (
     <Container>
@@ -118,34 +130,25 @@ const ApplicationList = () => {
               <DivisonTitle>{details.name.toUpperCase()}</DivisonTitle>
             </CardHeader>
             <CardBody>
-              <AppList>
-                <Link
-                  href={details.link}
-                  disabled={!app.enabled}
-                  target="_blank"
-                >
-                  {app.enabled ? (
-                    <Image
-                      src={require('assets/tool_active.png')}
-                      alt="product icon"
-                    />
-                  ) : (
-                    <Image
-                      src={require('assets/tool_disabled.png')}
-                      alt="product icon"
-                    />
-                  )}
-                </Link>
-                <Link
-                  href={details.link}
-                  disabled={!app.enabled}
-                  target="_blank"
-                >
-                  <AppTitle level={3} enabled={app.enabled}>
-                    {details.title}
-                  </AppTitle>
-                </Link>
-              </AppList>
+              <App
+                onClick={e => handleRoute(details, app.enabled)}
+                enabled={app.enabled}
+              >
+                {app.enabled ? (
+                  <Image
+                    src={require('assets/tool_active.png')}
+                    alt="product icon"
+                  />
+                ) : (
+                  <Image
+                    src={require('assets/tool_disabled.png')}
+                    alt="product icon"
+                  />
+                )}
+                <AppTitle level={4} enabled={app.enabled}>
+                  {details.title}
+                </AppTitle>
+              </App>
             </CardBody>
           </Card>
         )

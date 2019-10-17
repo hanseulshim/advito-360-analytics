@@ -10,7 +10,8 @@ const Container = styled.div`
 `
 
 const Products = styled(Title)`
-  font-size: 2em;
+  font-size: 1.5em;
+  text-transform: uppercase;
 `
 
 const Application = () => {
