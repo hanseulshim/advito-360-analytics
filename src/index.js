@@ -4,7 +4,7 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 import ApolloClient from 'apollo-boost'
 import { ApolloProvider } from '@apollo/react-hooks'
-import { HashRouter } from 'react-router-dom'
+import { Router } from 'react-router-dom'
 import { getToken, removeUser, getApi } from './helper'
 import history from './history'
 
@@ -33,9 +33,9 @@ const client = new ApolloClient({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <HashRouter history={history}>
+    <Router history={history}>
       <App />
-    </HashRouter>
+    </Router>
   </ApolloProvider>,
   document.getElementById('root')
 )

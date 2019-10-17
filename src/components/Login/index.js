@@ -58,7 +58,7 @@ const Link = styled.div`
   }
 `
 
-const NormalLoginForm = ({ form }) => {
+const Login = ({ form }) => {
   const [visible, setVisible] = useState(false)
   const [login, { loading, error, data }] = useMutation(LOGIN)
 
@@ -88,7 +88,7 @@ const NormalLoginForm = ({ form }) => {
       <Logo src={advitoLogo} />
       <Title>360 Analytics</Title>
       <FormContainer>
-        <Form onSubmit={handleSubmit} className="login-form">
+        <Form onSubmit={handleSubmit}>
           {loading ? (
             <Loader />
           ) : (
@@ -130,11 +130,7 @@ const NormalLoginForm = ({ form }) => {
           )}
           <Form.Item>
             <ButtonRow>
-              <Button
-                type="danger"
-                htmlType="submit"
-                className="login-form-button"
-              >
+              <Button type="danger" htmlType="submit">
                 Log in
               </Button>
               <Link onClick={() => setVisible(true)}>Forgot Password?</Link>
@@ -150,12 +146,10 @@ const NormalLoginForm = ({ form }) => {
   )
 }
 
-const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(
-  NormalLoginForm
-)
+const LoginForm = Form.create({ name: 'login' })(Login)
 
-NormalLoginForm.propTypes = {
+Login.propTypes = {
   form: PropTypes.object.isRequired
 }
 
-export default WrappedNormalLoginForm
+export default LoginForm

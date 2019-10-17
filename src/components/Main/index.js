@@ -4,35 +4,30 @@ import Header from 'components/Header'
 import Application from './Application'
 import Sidebar from 'components/Sidebar'
 
-const Container = styled.div`
-  margin: auto;
+const MainContainer = styled.div`
+  width: 100%;
+  padding: 0em 4em;
   display: flex;
   position: relative;
+  flex-direction: column;
   height: 100%;
-`
-
-const MainContainer = styled.div`
-  padding: 0em 4em;
-  width: 100%;
 `
 
 const PortalContainer = styled.div`
   display: flex;
-  flex: 1;
   flex-direction: column;
-  margin-top: ${props => props.theme.verticalSpace};
 `
 
 const Main = () => (
-  <Container>
-    <Sidebar />
+  <>
     <MainContainer>
+      <Sidebar />
       <Header />
       <PortalContainer>
         <Application />
       </PortalContainer>
     </MainContainer>
-  </Container>
+  </>
 )
 
 export default Main

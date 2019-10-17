@@ -8,6 +8,7 @@ import Main from 'components/Main'
 import Login from 'components/Login'
 import ResetPassword from 'components/Login/ResetPassword'
 import Dashboard from 'components/Dashboard'
+import User from 'components/User'
 import { getToken } from 'helper'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -30,6 +31,7 @@ const App = () => (
       <Route path="/reset-password" component={ResetPassword} />
       <PrivateRoute path="/" exact component={Main} />
       <PrivateRoute path="/dashboard" component={Dashboard} />
+      <PrivateRoute path="/user-profile" exact component={User} />
     </Switch>
   </ThemeProvider>
 )

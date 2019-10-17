@@ -16,6 +16,7 @@ type User {
   roleIds: [Int]
 }
 type Login {
+  id: Int
   displayName: String
   clientId: Int
   profilePicturePath: String
@@ -24,7 +25,9 @@ type Login {
 }
 
 extend type Query {
-  user(id: Int!): User
+  user(id: Int!): User @auth
+  timeZoneList: [String] @auth
+  dateFormatList: [String] @auth
 }
 extend type Mutation {
   login(username: String!, password: String!): Login
@@ -45,19 +48,22 @@ extend type Mutation {
   ): User @auth
   updateUser(
     id: Int!
-    username: String!
-    nameFirst: String!
-    nameLast: String!
-    isEnabled: Boolean!
+    username: String
+    nameFirst: String
+    nameLast: String
+    isEnabled: Boolean
     phone: String
     address: String
+    defaultTimezone: String
+    defaultLanguage: String
+    defaultDateFormat: String
     roleIds: [Int]
   ): User @auth
   updateUserPassword(
     id: Int!
     password: String!
     confirmPassword: String!
-  ): Boolean @auth
+  ): String @auth
   deleteUser(
     id: Int!
   ): Boolean @auth
