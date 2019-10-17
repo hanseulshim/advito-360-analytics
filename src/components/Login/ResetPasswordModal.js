@@ -36,7 +36,7 @@ const ResetPasswordModal = ({ form, visible, setVisible }) => {
         footer={null}
         onCancel={() => setVisible(false)}
       >
-        <Form onSubmit={handleSubmit} className="reset-password-form">
+        <Form onSubmit={handleSubmit}>
           <div>Enter your email address below to reset your password</div>
           {loading ? (
             <Loader />
@@ -54,11 +54,7 @@ const ResetPasswordModal = ({ form, visible, setVisible }) => {
             </Form.Item>
           )}
           <Form.Item>
-            <Button
-              type="danger"
-              htmlType="submit"
-              className="reset-password-form-button"
-            >
+            <Button type="danger" htmlType="submit">
               Submit
             </Button>
           </Form.Item>

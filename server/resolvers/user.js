@@ -133,8 +133,8 @@ export default {
         appId === AIR_ID
           ? EMAIL_OPTIONS.AIR
           : appId === ANALYTICS_ID
-          ? EMAIL_OPTIONS.ANALYTICS
-          : EMAIL_OPTIONS.DEFAULT
+            ? EMAIL_OPTIONS.ANALYTICS
+            : EMAIL_OPTIONS.DEFAULT
       const placeholders = {
         NAMEFIRST: user.nameFirst,
         URL: `${option.url}${token}`
@@ -319,7 +319,7 @@ export default {
         pwd: passwordHashed,
         userSalt: saltHashed
       })
-      return true
+      return 'Password has been changed'
     },
     deleteUser: async (_, { id }) => {
       const user = await AdvitoUser.query()

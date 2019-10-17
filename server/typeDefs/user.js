@@ -63,7 +63,7 @@ extend type Mutation {
     id: Int!
     password: String!
     confirmPassword: String!
-  ): Boolean @auth
+  ): String @auth
   deleteUser(
     id: Int!
   ): Boolean @auth

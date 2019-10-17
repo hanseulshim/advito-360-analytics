@@ -130,11 +130,7 @@ const Login = ({ form }) => {
           )}
           <Form.Item>
             <ButtonRow>
-              <Button
-                type="danger"
-                htmlType="submit"
-                className="login-form-button"
-              >
+              <Button type="danger" htmlType="submit">
                 Log in
               </Button>
               <Link onClick={() => setVisible(true)}>Forgot Password?</Link>

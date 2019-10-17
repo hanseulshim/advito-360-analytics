@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { Form, Input, Button, Select } from 'antd'
@@ -8,6 +8,7 @@ import ErrorMessage from 'components/common/ErrorMessage'
 import SuccessMessage from 'components/common/SuccessMessage'
 import Loader from 'components/common/Loader'
 import { getUser } from 'helper'
+import UpdatePasswordModal from './UpdatePasswordModal'
 
 const { Option } = Select
 
@@ -36,6 +37,7 @@ const ButtonRow = styled.div`
 const UserProfile = ({ form }) => {
   const { getFieldDecorator } = form
   const { id } = getUser()
+  const [visible, setVisible] = useState(false)
   const { loading: userLoading, data: userData, error: userError } = useQuery(
     USER,
     {
@@ -90,101 +92,104 @@ const UserProfile = ({ form }) => {
     })
   }
   return (
-    <Form onSubmit={handleSubmit} layout="vertical">
-      {userLoading ? (
-        <Loader />
-      ) : (
-        <ColumnContainer>
-          <Column first>
-            <Item label="USERNAME/EMAIL">
-              {getFieldDecorator('username', {
-                rules: [
-                  { required: true, message: 'Please input your username!' },
-                  {
-                    type: 'email',
-                    message: 'The input is not a valid email!'
-                  }
-                ]
-              })(<Input placeholder="Username" />)}
-            </Item>
-            {dateFormatLoading ? (
-              <Loader />
-            ) : (
-              <Item label="DATE/TIME FORMAT">
-                {getFieldDecorator('defaultDateFormat')(
-                  <Select showSearch>
-                    {dateFormatList.map(date => (
-                      <Option key={date} value={date}>
-                        {date}
-                      </Option>
-                    ))}
-                  </Select>
-                )}
+    <>
+      <Form onSubmit={handleSubmit} layout="vertical">
+        {userLoading ? (
+          <Loader />
+        ) : (
+          <ColumnContainer>
+            <Column first>
+              <Item label="USERNAME/EMAIL">
+                {getFieldDecorator('username', {
+                  rules: [
+                    { required: true, message: 'Please input your username!' },
+                    {
+                      type: 'email',
+                      message: 'The input is not a valid email!'
+                    }
+                  ]
+                })(<Input placeholder="Username" />)}
               </Item>
-            )}
-            {timeZoneLoading ? (
-              <Loader />
-            ) : (
-              <Item label="TIMEZONE">
-                {getFieldDecorator('defaultTimezone')(
-                  <Select showSearch>
-                    {timeZoneList.map(zone => (
-                      <Option key={zone} value={zone}>
-                        {zone}
-                      </Option>
-                    ))}
-                  </Select>
-                )}
+              {dateFormatLoading ? (
+                <Loader />
+              ) : (
+                <Item label="DATE/TIME FORMAT">
+                  {getFieldDecorator('defaultDateFormat')(
+                    <Select showSearch>
+                      {dateFormatList.map(date => (
+                        <Option key={date} value={date}>
+                          {date}
+                        </Option>
+                      ))}
+                    </Select>
+                  )}
+                </Item>
+              )}
+              {timeZoneLoading ? (
+                <Loader />
+              ) : (
+                <Item label="TIMEZONE">
+                  {getFieldDecorator('defaultTimezone')(
+                    <Select showSearch>
+                      {timeZoneList.map(zone => (
+                        <Option key={zone} value={zone}>
+                          {zone}
+                        </Option>
+                      ))}
+                    </Select>
+                  )}
+                </Item>
+              )}
+              <Item label="PHONE">
+                {getFieldDecorator('phone')(<Input placeholder="Phone" />)}
               </Item>
-            )}
-            <Item label="PHONE">
-              {getFieldDecorator('phone')(<Input placeholder="Phone" />)}
-            </Item>
-          </Column>
-          <Column>
-            <Item label="FIRST NAME">
-              {getFieldDecorator('nameFirst', {
-                rules: [
-                  { required: true, message: 'Please input your first name!' }
-                ]
-              })(<Input placeholder="First Name" />)}
-            </Item>
-            <Item label="LAST NAME">
-              {getFieldDecorator('nameLast', {
-                rules: [
-                  { required: true, message: 'Please input your last name!' }
-                ]
-              })(<Input placeholder="Last Name" />)}
-            </Item>
-            <Item label="PASSWORD">
-              <span style={{ marginRight: '5em' }}>**********</span>
-              <Button type="danger" ghost>
-                Reset Password
+            </Column>
+            <Column>
+              <Item label="FIRST NAME">
+                {getFieldDecorator('nameFirst', {
+                  rules: [
+                    { required: true, message: 'Please input your first name!' }
+                  ]
+                })(<Input placeholder="First Name" />)}
+              </Item>
+              <Item label="LAST NAME">
+                {getFieldDecorator('nameLast', {
+                  rules: [
+                    { required: true, message: 'Please input your last name!' }
+                  ]
+                })(<Input placeholder="Last Name" />)}
+              </Item>
+              <Item label="PASSWORD">
+                <span style={{ marginRight: '5em' }}>**********</span>
+                <Button type="danger" ghost onClick={() => setVisible(true)}>
+                  CHANGE
+                </Button>
+              </Item>
+              <Item label="ADDRESS">
+                {getFieldDecorator('address')(<Input placeholder="Address" />)}
+              </Item>
+            </Column>
+          </ColumnContainer>
+        )}
+        {updateLoading ? (
+          <Loader />
+        ) : (
+          <Form.Item>
+            <ButtonRow>
+              <Button type="danger" ghost htmlType="submit">
+                SAVE
               </Button>
-            </Item>
-            <Item label="ADDRESS">
-              {getFieldDecorator('address')(<Input placeholder="Address" />)}
-            </Item>
-          </Column>
-        </ColumnContainer>
-      )}
-      {updateLoading ? (
-        <Loader />
-      ) : (
-        <Form.Item>
-          <ButtonRow>
-            <Button type="danger" ghost htmlType="submit">
-              Save
-            </Button>
-          </ButtonRow>
-          {updateError && <ErrorMessage error={updateError} />}
-          {userError && <ErrorMessage error={userError} />}
-          {timeZoneError && <ErrorMessage error={timeZoneError} />}
-          {dateFormatError && <ErrorMessage error={dateFormatError} />}
-          {updateData && <SuccessMessage message={'Profile Updated'} />}
-        </Form.Item>
-      )}
-    </Form>
+            </ButtonRow>
+            {updateError && <ErrorMessage error={updateError} />}
+            {userError && <ErrorMessage error={userError} />}
+            {timeZoneError && <ErrorMessage error={timeZoneError} />}
+            {dateFormatError && <ErrorMessage error={dateFormatError} />}
+            {updateData && <SuccessMessage message={'Profile Updated'} />}
+          </Form.Item>
+        )}
+      </Form>
+      <UpdatePasswordModal visible={visible} setVisible={setVisible} />
+    </>
   )
 }
 
