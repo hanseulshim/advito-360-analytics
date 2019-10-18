@@ -67,6 +67,7 @@ export const UPDATE_USER = gql`
       username
       nameLast
       nameFirst
+      fullName
       isEnabled
       email
       phone
@@ -109,6 +110,7 @@ export const CREATE_USER = gql`
       username
       nameLast
       nameFirst
+      fullName
       isEnabled
       email
       phone

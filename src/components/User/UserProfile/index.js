@@ -7,7 +7,7 @@ import { UPDATE_USER, TIME_ZONE_LIST, DATE_FORMAT_LIST, USER } from 'api'
 import ErrorMessage from 'components/common/ErrorMessage'
 import SuccessMessage from 'components/common/SuccessMessage'
 import Loader from 'components/common/Loader'
-import { getUser } from 'helper'
+import { getUser, updateUserName } from 'helper'
 import UpdatePasswordModal from './UpdatePasswordModal'
 
 const { Option } = Select
@@ -70,6 +70,10 @@ const UserProfile = ({ form }) => {
       })
     }
   }, [userData])
+
+  if (updateData) {
+    updateUserName(updateData.updateUser.fullName)
+  }
 
   const handleSubmit = e => {
     e.preventDefault()

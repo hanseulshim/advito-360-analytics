@@ -23,6 +23,14 @@ export const getUser = () => {
   }
 }
 
+export const updateUserName = displayName => {
+  if (localStorage.getItem('advito-360-user')) {
+    const user = JSON.parse(localStorage.getItem('advito-360-user'))
+    user.displayName = displayName
+    localStorage.setItem('advito-360-user', JSON.stringify(user))
+  }
+}
+
 export const setUser = user => {
   if (localStorage.getItem('advito-360-user')) {
     localStorage.removeItem('advito-360-user')

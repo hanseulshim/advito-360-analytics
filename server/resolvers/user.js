@@ -367,6 +367,7 @@ export default {
       })
       return {
         ...user,
+        fullName: user.fullName(),
         roleIds
       }
     },
