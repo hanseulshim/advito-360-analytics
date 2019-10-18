@@ -40,7 +40,7 @@ extend type Query {
 }
 extend type Mutation {
   login(username: String!, password: String!): Login
-  logout(sessionToken: String!): Boolean @auth
+  logout(sessionToken: String!): Boolean
   sendResetPasswordEmail(appId: Int!, email: String!): String
   resetPassword(token: String!, password: String!, confirmPassword: String!): Boolean
   createUser(
