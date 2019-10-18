@@ -46,7 +46,7 @@ const navItems = [
   },
   {
     link: '/client-setup',
-    title: 'Clients'
+    title: 'Client Setup'
   }
 ]
 

@@ -40,8 +40,22 @@ export default {
         .map(role => role.advitoRoleId)
       return {
         ...user,
+        fullName: user.fullName(),
         roleIds
       }
+    },
+    userList: async (_, { clientId }) => {
+      const userList = await AdvitoUser.query()
+        .eager('advitoUserRoleLink')
+        .modifyEager('advitoUserRoleLink', builder => {
+          builder.select('advitoRoleId')
+        })
+        .where('clientId', clientId)
+      return userList.map(user => ({
+        ...user,
+        fullName: user.fullName(),
+        roleIds: user.advitoUserRoleLink.map(link => link.advitoRoleId)
+      }))
     },
     timeZoneList: () => moment.tz.names(),
     dateFormatList: () => ['MM/DD/YY', 'DD/MM/YY', 'YY/MM/DD'],
@@ -147,7 +161,7 @@ export default {
         appId === AIR_ID
           ? EMAIL_OPTIONS.AIR
           : appId === ANALYTICS_ID
-            ? EMAIL_OPTIONS.ANALYTICS
+            ? EMAIL_OPTIONS.ANALYTICS_RECOVERY
             : EMAIL_OPTIONS.DEFAULT
       const placeholders = {
         NAMEFIRST: user.nameFirst,
@@ -252,9 +266,31 @@ export default {
         advitoUserId: user.id,
         activity: 'User created'
       })
-      return {
-        ...user,
-        roleIds
+      const token = generateAccessToken('PASS')
+      await user.$relatedQuery('accessToken').insert({
+        tokenType: 'NEW_ACCOUNT',
+        token,
+        tokenExpiration: getExpirationDate(RECOVERY)
+      })
+
+      const option = EMAIL_OPTIONS.ANALYTICS_CREATE
+      const placeholders = {
+        NAMEFIRST: user.nameFirst,
+        URL: `${option.url}${token}`
+      }
+      try {
+        await sendEmail(
+          option.templateName,
+          user.email,
+          placeholders,
+          option.id
+        )
+        return {
+          ...user,
+          roleIds
+        }
+      } catch (err) {
+        throw new ForbiddenError(err.message)
       }
     },
     updateUser: async (

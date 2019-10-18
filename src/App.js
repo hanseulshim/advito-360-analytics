@@ -31,7 +31,8 @@ const App = () => (
       <Route path="/reset-password" component={ResetPassword} />
       <PrivateRoute path="/" exact component={Main} />
       <PrivateRoute path="/dashboard" component={Dashboard} />
-      <PrivateRoute path="/user-profile" exact component={User} />
+      <PrivateRoute path="/user-profile" component={User} />
+      <PrivateRoute path="/client-setup" component={User} />
     </Switch>
   </ThemeProvider>
 )

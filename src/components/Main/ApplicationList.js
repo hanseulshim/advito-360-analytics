@@ -96,7 +96,9 @@ const getCardDetails = name => {
 
 const ApplicationList = () => {
   const history = useHistory()
-  const { loading, error, data } = useQuery(APPLICATION_LIST)
+  const { loading, error, data } = useQuery(APPLICATION_LIST, {
+    fetchPolicy: 'cache-and-network'
+  })
   if (loading) return <Loader />
   if (error) {
     return <ErrorMessage error={error} />

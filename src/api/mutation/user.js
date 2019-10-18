@@ -79,6 +79,49 @@ export const UPDATE_USER = gql`
     }
   }
 `
+export const CREATE_USER = gql`
+  mutation createUser(
+    $clientId: Int!
+    $username: String!
+    $nameFirst: String!
+    $nameLast: String!
+    $isEnabled: Boolean!
+    $phone: String
+    $address: String
+    $password: String!
+    $confirmPassword: String!
+    $roleIds: [Int]!
+  ) {
+    createUser(
+      clientId: $clientId
+      username: $username
+      nameFirst: $nameFirst
+      nameLast: $nameLast
+      isEnabled: $isEnabled
+      phone: $phone
+      address: $address
+      password: $password
+      confirmPassword: $confirmPassword
+      roleIds: $roleIds
+    ) {
+      id
+      clientId
+      username
+      nameLast
+      nameFirst
+      isEnabled
+      email
+      phone
+      profilePicturePath
+      defaultTimezone
+      defaultLanguage
+      defaultDateFormat
+      address
+      roleIds
+    }
+  }
+`
+
 export const UPDATE_USER_PASSWORD = gql`
   mutation updateUserPassword(
     $id: Int!

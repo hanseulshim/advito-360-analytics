@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 import UserSidebar from 'components/Sidebar/UserSidebar'
 import Header from 'components/Header'
 import UserProfile from './UserProfile'
+import ClientSetup from './ClientSetup'
 import MyApplications from './MyApplications'
 import RecentActivities from './RecentActivities'
 
@@ -32,9 +33,8 @@ const User = () => {
       <Content>
         <Header />
         <Switch>
-          <Route path={'/user-profile'} exact component={UserProfile} />
-          {/* <Route path={'/client-setup'} component={ClientSetup} />
-          <Route path={'/user-access'} component={UserAcess} /> */}
+          <Route path={'/user-profile'} component={UserProfile} />
+          <Route path={'/client-setup'} component={ClientSetup} />
         </Switch>
       </Content>
     </Container>

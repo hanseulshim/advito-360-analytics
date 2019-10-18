@@ -1,10 +1,7 @@
 import user from './user'
 import application from './application'
+import client from './client'
 
 export default {
-  tabs: [
-    application.Query,
-    user.Query,
-    user.Mutation
-  ]
+  tabs: [client.Query, application.Query, user.Query, user.Mutation]
 }

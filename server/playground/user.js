@@ -9,6 +9,9 @@ export default {
       user(id: null) {
         ${User}
       }
+      userList(clientId: null) {
+        ${User}
+      }
       timeZoneList
       dateFormatList
       logList {

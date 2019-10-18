@@ -10,6 +10,7 @@ export const User = `id
         username
         nameLast
         nameFirst
+        fullName
         isEnabled
         email
         phone

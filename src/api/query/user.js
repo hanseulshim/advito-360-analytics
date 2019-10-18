@@ -7,6 +7,29 @@ export const USER = gql`
       clientId
       username
       nameLast
+      fullName
+      nameFirst
+      isEnabled
+      email
+      phone
+      profilePicturePath
+      defaultTimezone
+      defaultLanguage
+      defaultDateFormat
+      address
+      roleIds
+    }
+  }
+`
+
+export const USER_LIST = gql`
+  query userList($clientId: Int) {
+    userList(clientId: $clientId) {
+      id
+      clientId
+      username
+      nameLast
+      fullName
       nameFirst
       isEnabled
       email

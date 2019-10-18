@@ -5,6 +5,7 @@ type User {
   username: String
   nameLast: String
   nameFirst: String
+  fullName: String
   isEnabled: Boolean
   email: String
   phone: String
@@ -32,6 +33,7 @@ type AdvitoUserLog {
 
 extend type Query {
   user(id: Int!): User @auth
+  userList(clientId: Int): [User] @auth
   timeZoneList: [String] @auth
   dateFormatList: [String] @auth
   logList: [AdvitoUserLog] @auth

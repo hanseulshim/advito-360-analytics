@@ -2,11 +2,12 @@ import { GraphQLScalarType } from 'graphql'
 import { Kind } from 'graphql/language'
 import user from './user'
 import application from './application'
+import client from './client'
 import merge from 'lodash/merge'
 import moment from 'moment'
 
 export default {
-  ...merge(user, application),
+  ...merge(user, application, client),
   Date: new GraphQLScalarType({
     name: 'Date',
     description: 'Date custom scalar type',
