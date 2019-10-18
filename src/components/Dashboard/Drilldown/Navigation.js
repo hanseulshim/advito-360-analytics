@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router'
 import styled from 'styled-components'
-import PropTypes from 'prop-types'
 
 const Container = styled.div`
   display: flex;
@@ -69,10 +68,6 @@ const Navigation = () => {
       ))}
     </Container>
   )
-}
-
-Navigation.propTypes = {
-  location: PropTypes.object.isRequired
 }
 
 export default Navigation
