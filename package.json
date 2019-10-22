@@ -50,7 +50,7 @@
     "deploy:prod": "REACT_APP_STAGE=prod react-app-rewired build && aws s3 sync  ./build s3://360-analytics-prod/ --acl public-read --profile advito",
     "deploy:prod:server": "cd ./server && yarn prod",
     "deploy:prod:all": "yarn deploy:prod & yarn deploy:prod:server",
-    "deploy:all:front": "deploy:alph && deploy:beta && deploy:dev && deploy:prod",
+    "deploy:all:front": "deploy:alpha && deploy:beta && deploy:dev && deploy:prod",
     "deploy:all:server": "cd ./server && yarn all",
     "deploy:all": "deploy:alpha:all && deploy:beta:all && deploy:dev:all && deploy:prod:all"
   },
