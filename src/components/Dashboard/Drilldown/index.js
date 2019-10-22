@@ -3,8 +3,8 @@ import { Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 import Navigation from './Navigation'
 import ProgramPerformance from './Views/ProgramPerformance'
-import SavingsOpportunities from './Views/SavingsOpportunities'
-import RiskAreas from './Views/RiskAreas'
+import Compliance from './Views/Compliance'
+import Alerts from './Views/Alerts'
 import TeBreakdown from './Views/TeBreakdown'
 import NetSpendAnalysis from './Views/NetSpendAnalysis'
 
@@ -28,11 +28,8 @@ const Drilldown = () => {
             path={'/dashboard/program-performance'}
             component={ProgramPerformance}
           />
-          <Route
-            path={'/dashboard/savings-opportunities'}
-            component={SavingsOpportunities}
-          />
-          <Route path={'/dashboard/risk-areas'} component={RiskAreas} />
+          <Route path={'/dashboard/compliance'} component={Compliance} />
+          <Route path={'/dashboard/alerts'} component={Alerts} />
           <Route path={'/dashboard/te-breakdown'} component={TeBreakdown} />
           <Route
             path={'/dashboard/net-spend-analysis'}

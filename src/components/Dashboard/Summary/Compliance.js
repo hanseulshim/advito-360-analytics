@@ -18,14 +18,14 @@ const SectionContainer = styled.div`
   margin-bottom: 1em;
 `
 
-const RiskAreas = () => (
+const Compliance = () => (
   <Container>
     <SectionContainer>
-      <Link to="/dashboard/risk-areas">
-        <Title>Risk Areas</Title>
+      <Link to="/dashboard/compliance">
+        <Title>Compliance</Title>
       </Link>
     </SectionContainer>
   </Container>
 )
 
-export default RiskAreas
+export default Compliance
