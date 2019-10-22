@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import ProgramPerformance from './ProgramPerformance'
 import NetSpendAnalysis from './NetSpendAnalysis'
 import TeBreakdownRow from './TeBreakdownRow'
-import SavingsOpportunities from './SavingsOpportunities'
-import RiskAreas from './RiskAreas'
+import Compliance from './Compliance'
+import Alerts from './Alerts'
 
 const SummaryContainer = styled.div`
   display: flex;
@@ -26,8 +26,8 @@ const Summary = () => (
     </Row>
     <TeBreakdownRow />
     <Row>
-      <SavingsOpportunities />
-      <RiskAreas />
+      <Compliance />
+      <Alerts />
     </Row>
   </SummaryContainer>
 )

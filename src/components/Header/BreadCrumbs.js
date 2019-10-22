@@ -51,10 +51,10 @@ const getSubPath = subpath => {
       return 'T&E Breakdown'
     case 'markets':
       return 'Markets'
-    case 'savings-opportunities':
-      return 'Savings Opportunities'
-    case 'risk-areas':
-      return 'Risk Areas'
+    case 'compliance':
+      return 'Compliance'
+    case 'alerts':
+      return 'Alerts'
     case 'general':
       return 'General'
     case 'divisions':
@@ -80,17 +80,9 @@ const BreadCrumbs = () => {
         <BackTo>{'«'} Back to Console</BackTo>
       </Link>
       <Spacer>|</Spacer>
-      {renderSubPaths && !pathname.includes('client-setup') ? (
-        <Link to={`/${subPaths[1]}/dashboard`}>
-          <BackTo>{getPath(subPaths[1])}</BackTo>
-        </Link>
-      ) : renderSubPaths ? (
-        <Link to={'/client-setup'}>
-          <BackTo>{getPath(subPaths[1])}</BackTo>
-        </Link>
-      ) : (
-        <Text>{getPath(subPaths[1])}</Text>
-      )}
+      <Link to={`/${subPaths[1]}`}>
+        <BackTo>{getPath(subPaths[1])}</BackTo>
+      </Link>
       {renderSubPaths && (
         <>
           <Spacer>|</Spacer>

@@ -44,12 +44,12 @@ const NavItems = [
     title: 'T&E Breakdown'
   },
   {
-    link: '/dashboard/savings-opportunities',
-    title: 'Savings Opportunities'
+    link: '/dashboard/compliance',
+    title: 'Compliance'
   },
   {
-    link: '/dashboard/risk-areas',
-    title: 'Risk Areas'
+    link: '/dashboard/alerts',
+    title: 'Alerts'
   }
 ]
 

@@ -18,14 +18,14 @@ const SectionContainer = styled.div`
   margin-bottom: 1em;
 `
 
-const SavingsOpportunities = () => (
+const Alerts = () => (
   <Container>
     <SectionContainer>
-      <Link to="/dashboard/savings-opportunities">
-        <Title>Savings Opportunities</Title>
+      <Link to="/dashboard/alerts">
+        <Title>Alerts</Title>
       </Link>
     </SectionContainer>
   </Container>
 )
 
-export default SavingsOpportunities
+export default Alerts
