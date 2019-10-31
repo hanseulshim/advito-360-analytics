@@ -3,8 +3,7 @@ export const EMAIL_BCC = ['ianda@advito.com', 'hshim@boostlabs.com']
 export const EMAIL_OPTIONS = {
   AIR: {
     id: 2,
-    url:
-      'https://a3-prod1.s3.us-east-2.amazonaws.com/index.html#/resetpassword?t=',
+    url: 'https://a3.advito.com/index.html#/resetpassword?t=',
     templateName: 'Password Air Recovery'
   },
   ANALYTICS_RECOVERY: {

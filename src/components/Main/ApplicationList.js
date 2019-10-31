@@ -86,7 +86,7 @@ const getCardDetails = name => {
       return {
         name,
         icon: 'air.png',
-        link: 'https://a3-prod1.s3.us-east-2.amazonaws.com/index.html#/login',
+        link: 'https://a3.advito.com/index.html#/login',
         title: 'Air Program Analytics'
       }
     default:
