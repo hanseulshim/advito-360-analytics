@@ -5,6 +5,7 @@ export default {
     applicationList: async (_, __, { user }) => {
       const AdvitoApplicationList = await AdvitoApplication.query()
         .where('isActive', true)
+        .whereNot('id', 4)
         .eager('advitoApplicationRole')
         .modifyEager('advitoApplicationRole', builder => {
           builder.whereIn('id', user.roleIds)
